@@ -24,6 +24,10 @@
 %token Stringlist
 %token LBR 
 %token RBR
+%token LOAND, LOOR, LONOT
+%token LESS, FRATE, LEQ, GEQ, ASSIGN, EQUAL
+%token PLUS, MINUS, TIMES, MOD, DIV
+%token INJECT, EXTRACT
 %left "<<" ">>"
 %left '<'
 %left '+' '-'
@@ -61,11 +65,11 @@ FormalRest	:	',' Type ID FormalRest
 StatementList	:	Statement StatementList
 	|
 	;
-Statement	:	Decl '=' LBR ExpList RBR
+Statement	:	Decl ASSIGN LBR ExpList RBR
 	|	"if" LPAR Exp RPAR LBR StatementList RBR
 	|	"while" LPAR Exp RPAR LBR StatementList RBR
-	|	"cout" "<<" ID "<<" "endl" ';'
-	|	"cin" ">>" ID ';'
+	|	"cout" INJECT ID INJECT "endl" ';'
+	|	"cin" EXTRACT ID ';'
 	|	Exp
 	| 	RET Exp
 	;
@@ -84,7 +88,7 @@ ClassDecl	:	Decl ClassDeclList
 Exp	:	INTEGER Op
 	|	INTEGER Op1
 	|	BOOL Op1
-	|	'!' Exp
+	|	LONOT Exp
 	|	ID Op2
 	|	this IDList
 	|	ID IDList
@@ -120,20 +124,24 @@ ExpRest	:	',' Exp ExpRest
 	|
 	;
 
-Op	:	'+' Exp Op
-	|	'-' Exp Op
-	|	'*' Exp Op
-	|	'/' Exp Op
-	|	'%' Exp Op
+Op	:	PLUS Exp Op
+	|	MINUS Exp Op
+	|	TIMES Exp Op
+	|	DIV Exp Op
+	|	MOD Exp Op
 	|
 	;	
-Op1	: 	"&&" Exp Op1
-	|	"||" Exp Op1	
+Op1	: 	LOAND Exp Op1
+	|	LOOR Exp Op1
+	|	LESS Exp Op1
+	|	GRATE Exp OP1
+	|	GEQ Exp Op1
+	|	LEQ Exp OP1
+	|	EQUAL Exp Op1
 	|
 	;
-Op2	:	'=' Exp
+Op2	:	ASSIGN Exp
 	;
-
 
 %%
 int main() { yyparse(); return 0;}
