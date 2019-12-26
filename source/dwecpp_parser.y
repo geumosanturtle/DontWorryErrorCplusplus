@@ -9,27 +9,21 @@
 	char* sval;
 	int ival;
 }
-%token <ival> INTEGER
-%token <sval> STRING
-%token SIZE THIS
-%token ID
-%token BOOL
-%token Q_CLASS
-%token PRIVATE PUBLIC
-%token Int String Intarr Stringarr Intlist Stringlist Void RET
-%token SEMICOLON
-%token ASSIGN PAS MAS TIMESAS DIVAS MODAS
-%token COMMA COLON
-%token LOOR
-%token LOAND
-%token EQUAL NEQ
-%token LESS LEQ GREAT GEQ
-%token INJECT EXTRACT
-%token PLUS MINUS
-%token TIMES DIV MOD
-%token LONOT PLUSPLUS MINUSMINUS
-%token DOT
-%token LPAR RPAR LBR RBR
+%token <ival> INTEGER <sval> STRING ID
+%token SEMICOLON COMMA
+%token COLONCOLON DOT ASSIGN PAS MAS TIMESAS DIVAS MODAS SIZE
+%token PLUS MINUS DIV MOD TIMES INJECT EXTRACT EQUAL NEQ LEQ GEQ LESS GREAT LOAND LOOR LONOT
+%token PLUSPLUS MINUSMINUS 
+%token BOOL Q_CLASS 
+%token ELSE 
+%token FALSE Int String Intarr Stringarr Intlist Stringlist IF
+%token PRIVATE PUBLIC RET COLON
+%token THIS
+%token TRUE 
+%token Void WHILE
+%token LBR RBR 
+%token LPAR RPAR
+
 %right UMINUS UPLUS
 %%
 Program		:	FunctionList
@@ -39,8 +33,8 @@ FunctionList 	:	DeclList MainFunction
 
 MainFunction	:	Int "main" LPAR Void RPAR LBR StatementList RBR
 Decl	:	Type ID SEMICOLON
-	|
 	;
+
 DeclList	:	Decl DeclList
 	|	Class DeclList
 	|	Function DeclList
@@ -51,19 +45,19 @@ Function	:	Type ID LPAR FormalList RPAR LBR StatementList RBR
 MethodDecl	:	Function MethodDecl
 	|
 	;
-FormalList	:	Type ID	FormalRest
+FormalList	:	Type ID FormalRest
 		|
 		;
-FormalRest	:	COMMA Type ID FormalRest
+FormalRest	:	COMMA Type ID FormalRest	
 		|
 		;
 
 StatementList	:	Statement StatementList
-	|
+	|	{printf("asd");}
 	;
-Statement	:	Decl ASSIGN LBR ExpList RBR
-	|	"if" LPAR Exp RPAR LBR StatementList RBR
-	|	"while" LPAR Exp RPAR LBR StatementList RBR
+Statement	:	Decl
+	|	IF LPAR Exp RPAR LBR StatementList RBR
+	|	WHILE LPAR Exp RPAR LBR StatementList RBR
 	|	"cout" INJECT ID INJECT "endl" SEMICOLON
 	|	"cin" EXTRACT ID SEMICOLON
 	|	Exp
@@ -77,19 +71,23 @@ ClassDecl 	:
 ClassName	:	ID
 	;
 
-ClassStatement	:	Access COLON ClassDecl MethodDecl ClassStatement
+ClassStatement	:	Access ClassDecl ClassStatement
+	|	Access MethodDecl ClassStatement
 	|
 	;
 	
-Exp	:	INTEGER Op
-	|	INTEGER Op1
-	|	BOOL Op1
-	|	LONOT Exp
-	|	ID Op2
-	|	THIS IDList
-	|	ID IDList
-	|	LPAR Exp RPAR
-	|	Sign
+Exp	:	INTEGER Op	{printf("\nExe1\n");}
+	|	INTEGER Op1	{printf("\nExe2\n");}
+	|	BOOL Op1	{printf("\nExe3\n");}
+	|	LONOT Exp	{printf("\nExe4\n");}
+	|	ID Op2		{printf("\nExe5\n");}
+	|	THIS IDList	{printf("\nExe6\n");}
+	|	ID IDList		{printf("\nExe7\n");}
+	|	LPAR Exp RPAR	{printf("\nExe8\n");}
+	|	Sign		{printf("\nExe9\n");}
+	|	INTEGER		{printf("\nExe10\n");}
+	|	BOOL		{printf("\nExe11\n");}
+	|	ID		{printf("\nExe12\n");}
 	;
 
 IDList	:	DOT ID IDList
@@ -102,10 +100,10 @@ Sign	:	MINUS INTEGER	{}	%prec UMINUS
 	|	PLUS INTEGER	{}	%prec UPLUS
 	;
 Access	:	
-	| 	PUBLIC
-	|	PRIVATE
+	| 	PUBLIC COLON
+	|	PRIVATE COLON
 	;
-Type	:	Int
+Type	:	Int	{printf("Type");}
 	|	String
 	|	Intarr
 	|	Stringarr
@@ -114,31 +112,24 @@ Type	:	Int
 	|	Void
 	;
 
-ExpList	:	Exp ExpRest
-	;
 
-ExpRest	:	COMMA Exp ExpRest
-	|
-	;
-
-Op	:	PLUS Exp Op
-	|	MINUS Exp Op
-	|	TIMES Exp Op
-	|	DIV Exp Op
-	|	MOD Exp Op
-	|
+Op	:	PLUS Exp
+	|	MINUS Exp
+	|	TIMES Exp
+	|	DIV Exp
+	|	MOD Exp
 	;	
-Op1	: 	LOAND Exp Op1
-	|	LOOR Exp Op1
-	|	LESS Exp Op1
-	|	GREAT Exp Op1
-	|	GEQ Exp Op1
-	|	LEQ Exp Op1
-	|	EQUAL Exp Op1
-	|
+Op1	: 	LOAND Exp
+	|	LOOR Exp
+	|	LESS Exp
+	|	GREAT Exp
+	|	GEQ Exp
+	|	LEQ Exp
+	|	EQUAL Exp
 	;
 Op2	:	ASSIGN Exp
 	;
+
 
 %%
 int main() { yyparse(); return 0;}

@@ -24,7 +24,7 @@ Newline		[\n\r]+
 Newline		{;}
 Whitespace	{;}
 
-Integer		{ printf("INT(%s)",yytext); }
+Integer		{ yylval.ival = atoi(yytext); printf("INT(%s)",yytext); return INTEGER;}
 
 "\""{StringInput}*"\"" { printf("STRING_VALUE(%s)", yytext); return STRING; }
 
@@ -40,7 +40,9 @@ Integer		{ printf("INT(%s)",yytext); }
 
 "class"					{ return Q_CLASS; }
 "return"				{ return RET; }
-
+"if"				{return IF;}
+"else"				{return ELSE;}
+"while"				{return WHILE;}
 
 "private"				{ return PRIVATE; }
 "public"				{ return PUBLIC;  }
@@ -74,12 +76,12 @@ Integer		{ printf("INT(%s)",yytext); }
 "%="  { return MODAS;}
 "%"   { return MOD ;  }
 "/"   { return DIV ;  }
-"="   { return ASSIGN;}
+"="   { printf("="); return ASSIGN;}
 
 "{"   { return LBR ;}
 "}"   { return RBR ;}
-"("   { return LPAR;}
-")"	  { return RPAR;}
+"("   {  return LPAR;}
+")"	  {  return RPAR;}
 ","   {	return COMMA; }
 ";"   {return SEMICOLON;}
 ":"	  { return COLON;}
