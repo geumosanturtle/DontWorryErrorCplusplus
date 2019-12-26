@@ -1,0 +1,16 @@
+class yallacha {
+	private:
+		int x;
+ 		intarr y;
+	public:
+		void print(){
+			cout << x << endl;
+			cout << y << endl;
+		}
+};
+
+int main(){
+	yallacha y;
+	y.print();
+	return 0;
+}

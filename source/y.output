@@ -1,0 +1,1999 @@
+Terminals unused in grammar
+
+   STRING
+   COLONCOLON
+   PAS
+   MAS
+   TIMESAS
+   DIVAS
+   MODAS
+   NEQ
+   PLUSPLUS
+   MINUSMINUS
+   ELSE
+   FALSE
+   TRUE
+
+
+Rules useless in parser due to conflicts
+
+    3 FunctionList: %empty
+
+    9 DeclList: %empty
+
+
+State 0 충돌: 1 쉬프트/리듀스,  ᅟ1 리듀스/리듀스
+State 12 충돌: 1 쉬프트/리듀스
+State 14 충돌: 1 쉬프트/리듀스
+State 15 충돌: 1 쉬프트/리듀스
+State 26 충돌: 2 쉬프트/리듀스,  ᅟ1 리듀스/리듀스
+State 33 충돌: 8 쉬프트/리듀스,  ᅟ11 리듀스/리듀스
+State 40 충돌: 8 쉬프트/리듀스
+State 41 충돌: 8 쉬프트/리듀스
+State 42 충돌: 2 쉬프트/리듀스,  ᅟ1 리듀스/리듀스
+State 43 충돌: 2 쉬프트/리듀스,  ᅟ1 리듀스/리듀스
+State 61 충돌: 1 리듀스/리듀스
+State 101 충돌: 2 리듀스/리듀스
+
+
+문법
+
+    0 $accept: Program $end
+
+    1 Program: FunctionList MainFunction
+
+    2 FunctionList: DeclList
+    3             | %empty
+
+    4 MainFunction: Int "main" LPAR Void RPAR LBR StatementList RBR
+
+    5 Decl: Type ID SEMICOLON
+
+    6 DeclList: Decl DeclList
+    7         | Class DeclList
+    8         | Function DeclList
+    9         | %empty
+
+   10 Function: Type ID LPAR FormalList RPAR LBR StatementList RBR
+
+   11 MethodDecl: Function MethodDecl
+   12           | %empty
+
+   13 FormalList: Type ID FormalRest
+   14           | %empty
+
+   15 FormalRest: COMMA Type ID FormalRest
+   16           | %empty
+
+   17 StatementList: Statement StatementList
+   18              | %empty
+
+   19 Statement: Decl
+   20          | IF LPAR Exp RPAR LBR StatementList RBR
+   21          | WHILE LPAR Exp RPAR LBR StatementList RBR
+   22          | "cout" INJECT ID INJECT "endl" SEMICOLON
+   23          | "cin" EXTRACT ID SEMICOLON
+   24          | Exp SEMICOLON
+   25          | RET Exp SEMICOLON
+
+   26 Class: Q_CLASS ClassName LBR ClassStatement RBR
+
+   27 ClassDecl: %empty
+   28          | Decl ClassDecl
+
+   29 ClassName: ID
+
+   30 ClassStatement: Access ClassDecl ClassStatement
+   31               | Access MethodDecl ClassStatement
+   32               | %empty
+
+   33 Exp: INTEGER Op
+   34    | INTEGER Op1
+   35    | BOOL Op1
+   36    | LONOT Exp
+   37    | ID Op2
+   38    | THIS IDList
+   39    | ID IDList
+   40    | LPAR Exp RPAR
+   41    | Sign
+   42    | INTEGER
+   43    | BOOL
+   44    | ID
+
+   45 IDList: DOT ID IDList
+   46       | DOT ID LPAR FormalList RPAR
+   47       | DOT SIZE LPAR RPAR
+   48       | COMMA ID IDList
+   49       | %empty
+
+   50 Sign: MINUS INTEGER
+   51     | PLUS INTEGER
+
+   52 Access: %empty
+   53       | PUBLIC COLON
+   54       | PRIVATE COLON
+
+   55 Type: Int
+   56     | String
+   57     | Intarr
+   58     | Stringarr
+   59     | Intlist
+   60     | Stringlist
+   61     | Void
+   62     | ClassName
+
+   63 Op: PLUS Exp
+   64   | MINUS Exp
+   65   | TIMES Exp
+   66   | DIV Exp
+   67   | MOD Exp
+
+   68 Op1: LOAND Exp
+   69    | LOOR Exp
+   70    | LESS Exp
+   71    | GREAT Exp
+   72    | GEQ Exp
+   73    | LEQ Exp
+   74    | EQUAL Exp
+
+   75 Op2: ASSIGN Exp
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+INTEGER (258) 33 34 42 50 51
+STRING (259)
+ID (260) 5 10 13 15 22 23 29 37 39 44 45 46 48
+SEMICOLON (261) 5 22 23 24 25
+COMMA (262) 15 48
+COLONCOLON (263)
+DOT (264) 45 46 47
+ASSIGN (265) 75
+PAS (266)
+MAS (267)
+TIMESAS (268)
+DIVAS (269)
+MODAS (270)
+SIZE (271) 47
+PLUS (272) 51 63
+MINUS (273) 50 64
+DIV (274) 66
+MOD (275) 67
+TIMES (276) 65
+INJECT (277) 22
+EXTRACT (278) 23
+EQUAL (279) 74
+NEQ (280)
+LEQ (281) 73
+GEQ (282) 72
+LESS (283) 70
+GREAT (284) 71
+LOAND (285) 68
+LOOR (286) 69
+LONOT (287) 36
+PLUSPLUS (288)
+MINUSMINUS (289)
+BOOL (290) 35 43
+Q_CLASS (291) 26
+ELSE (292)
+FALSE (293)
+Int (294) 4 55
+String (295) 56
+Intarr (296) 57
+Stringarr (297) 58
+Intlist (298) 59
+Stringlist (299) 60
+IF (300) 20
+PRIVATE (301) 54
+PUBLIC (302) 53
+RET (303) 25
+COLON (304) 53 54
+THIS (305) 38
+TRUE (306)
+Void (307) 4 61
+WHILE (308) 21
+LBR (309) 4 10 20 21 26
+RBR (310) 4 10 20 21 26
+LPAR (311) 4 10 20 21 40 46 47
+RPAR (312) 4 10 20 21 40 46 47
+UMINUS (313)
+UPLUS (314)
+"main" (315) 4
+"cout" (316) 22
+"endl" (317) 22
+"cin" (318) 23
+
+
+Nonterminals, with rules where they appear
+
+$accept (64)
+    on left: 0
+Program (65)
+    on left: 1, on right: 0
+FunctionList (66)
+    on left: 2 3, on right: 1
+MainFunction (67)
+    on left: 4, on right: 1
+Decl (68)
+    on left: 5, on right: 6 19 28
+DeclList (69)
+    on left: 6 7 8 9, on right: 2 6 7 8
+Function (70)
+    on left: 10, on right: 8 11
+MethodDecl (71)
+    on left: 11 12, on right: 11 31
+FormalList (72)
+    on left: 13 14, on right: 10 46
+FormalRest (73)
+    on left: 15 16, on right: 13 15
+StatementList (74)
+    on left: 17 18, on right: 4 10 17 20 21
+Statement (75)
+    on left: 19 20 21 22 23 24 25, on right: 17
+Class (76)
+    on left: 26, on right: 7
+ClassDecl (77)
+    on left: 27 28, on right: 28 30
+ClassName (78)
+    on left: 29, on right: 26 62
+ClassStatement (79)
+    on left: 30 31 32, on right: 26 30 31
+Exp (80)
+    on left: 33 34 35 36 37 38 39 40 41 42 43 44, on right: 20 21 24
+    25 36 40 63 64 65 66 67 68 69 70 71 72 73 74 75
+IDList (81)
+    on left: 45 46 47 48 49, on right: 38 39 45 48
+Sign (82)
+    on left: 50 51, on right: 41
+Access (83)
+    on left: 52 53 54, on right: 30 31
+Type (84)
+    on left: 55 56 57 58 59 60 61 62, on right: 5 10 13 15
+Op (85)
+    on left: 63 64 65 66 67, on right: 33
+Op1 (86)
+    on left: 68 69 70 71 72 73 74, on right: 34 35
+Op2 (87)
+    on left: 75, on right: 37
+
+
+State 0
+
+    0 $accept: . Program $end
+
+    ID          shift, and go to state 1
+    Q_CLASS     shift, and go to state 2
+    Int         shift, and go to state 3
+    String      shift, and go to state 4
+    Intarr      shift, and go to state 5
+    Stringarr   shift, and go to state 6
+    Intlist     shift, and go to state 7
+    Stringlist  shift, and go to state 8
+    Void        shift, and go to state 9
+
+    Int  [reduce using rule 3 (FunctionList)]
+    Int  [reduce using rule 9 (DeclList)]
+
+    Program       go to state 10
+    FunctionList  go to state 11
+    Decl          go to state 12
+    DeclList      go to state 13
+    Function      go to state 14
+    Class         go to state 15
+    ClassName     go to state 16
+    Type          go to state 17
+
+
+State 1
+
+   29 ClassName: ID .
+
+    $default  reduce using rule 29 (ClassName)
+
+
+State 2
+
+   26 Class: Q_CLASS . ClassName LBR ClassStatement RBR
+
+    ID  shift, and go to state 1
+
+    ClassName  go to state 18
+
+
+State 3
+
+   55 Type: Int .
+
+    $default  reduce using rule 55 (Type)
+
+
+State 4
+
+   56 Type: String .
+
+    $default  reduce using rule 56 (Type)
+
+
+State 5
+
+   57 Type: Intarr .
+
+    $default  reduce using rule 57 (Type)
+
+
+State 6
+
+   58 Type: Stringarr .
+
+    $default  reduce using rule 58 (Type)
+
+
+State 7
+
+   59 Type: Intlist .
+
+    $default  reduce using rule 59 (Type)
+
+
+State 8
+
+   60 Type: Stringlist .
+
+    $default  reduce using rule 60 (Type)
+
+
+State 9
+
+   61 Type: Void .
+
+    $default  reduce using rule 61 (Type)
+
+
+State 10
+
+    0 $accept: Program . $end
+
+    $end  shift, and go to state 19
+
+
+State 11
+
+    1 Program: FunctionList . MainFunction
+
+    Int  shift, and go to state 20
+
+    MainFunction  go to state 21
+
+
+State 12
+
+    6 DeclList: Decl . DeclList
+
+    ID          shift, and go to state 1
+    Q_CLASS     shift, and go to state 2
+    Int         shift, and go to state 3
+    String      shift, and go to state 4
+    Intarr      shift, and go to state 5
+    Stringarr   shift, and go to state 6
+    Intlist     shift, and go to state 7
+    Stringlist  shift, and go to state 8
+    Void        shift, and go to state 9
+
+    Int  [reduce using rule 9 (DeclList)]
+
+    Decl       go to state 12
+    DeclList   go to state 22
+    Function   go to state 14
+    Class      go to state 15
+    ClassName  go to state 16
+    Type       go to state 17
+
+
+State 13
+
+    2 FunctionList: DeclList .
+
+    $default  reduce using rule 2 (FunctionList)
+
+
+State 14
+
+    8 DeclList: Function . DeclList
+
+    ID          shift, and go to state 1
+    Q_CLASS     shift, and go to state 2
+    Int         shift, and go to state 3
+    String      shift, and go to state 4
+    Intarr      shift, and go to state 5
+    Stringarr   shift, and go to state 6
+    Intlist     shift, and go to state 7
+    Stringlist  shift, and go to state 8
+    Void        shift, and go to state 9
+
+    Int  [reduce using rule 9 (DeclList)]
+
+    Decl       go to state 12
+    DeclList   go to state 23
+    Function   go to state 14
+    Class      go to state 15
+    ClassName  go to state 16
+    Type       go to state 17
+
+
+State 15
+
+    7 DeclList: Class . DeclList
+
+    ID          shift, and go to state 1
+    Q_CLASS     shift, and go to state 2
+    Int         shift, and go to state 3
+    String      shift, and go to state 4
+    Intarr      shift, and go to state 5
+    Stringarr   shift, and go to state 6
+    Intlist     shift, and go to state 7
+    Stringlist  shift, and go to state 8
+    Void        shift, and go to state 9
+
+    Int  [reduce using rule 9 (DeclList)]
+
+    Decl       go to state 12
+    DeclList   go to state 24
+    Function   go to state 14
+    Class      go to state 15
+    ClassName  go to state 16
+    Type       go to state 17
+
+
+State 16
+
+   62 Type: ClassName .
+
+    $default  reduce using rule 62 (Type)
+
+
+State 17
+
+    5 Decl: Type . ID SEMICOLON
+   10 Function: Type . ID LPAR FormalList RPAR LBR StatementList RBR
+
+    ID  shift, and go to state 25
+
+
+State 18
+
+   26 Class: Q_CLASS ClassName . LBR ClassStatement RBR
+
+    LBR  shift, and go to state 26
+
+
+State 19
+
+    0 $accept: Program $end .
+
+    $default  accept
+
+
+State 20
+
+    4 MainFunction: Int . "main" LPAR Void RPAR LBR StatementList RBR
+
+    "main"  shift, and go to state 27
+
+
+State 21
+
+    1 Program: FunctionList MainFunction .
+
+    $default  reduce using rule 1 (Program)
+
+
+State 22
+
+    6 DeclList: Decl DeclList .
+
+    $default  reduce using rule 6 (DeclList)
+
+
+State 23
+
+    8 DeclList: Function DeclList .
+
+    $default  reduce using rule 8 (DeclList)
+
+
+State 24
+
+    7 DeclList: Class DeclList .
+
+    $default  reduce using rule 7 (DeclList)
+
+
+State 25
+
+    5 Decl: Type ID . SEMICOLON
+   10 Function: Type ID . LPAR FormalList RPAR LBR StatementList RBR
+
+    SEMICOLON  shift, and go to state 28
+    LPAR       shift, and go to state 29
+
+
+State 26
+
+   26 Class: Q_CLASS ClassName LBR . ClassStatement RBR
+
+    PRIVATE  shift, and go to state 30
+    PUBLIC   shift, and go to state 31
+
+    PRIVATE   [reduce using rule 52 (Access)]
+    PUBLIC    [reduce using rule 52 (Access)]
+    RBR       reduce using rule 32 (ClassStatement)
+    RBR       [reduce using rule 52 (Access)]
+    $default  reduce using rule 52 (Access)
+
+    ClassStatement  go to state 32
+    Access          go to state 33
+
+
+State 27
+
+    4 MainFunction: Int "main" . LPAR Void RPAR LBR StatementList RBR
+
+    LPAR  shift, and go to state 34
+
+
+State 28
+
+    5 Decl: Type ID SEMICOLON .
+
+    $default  reduce using rule 5 (Decl)
+
+
+State 29
+
+   10 Function: Type ID LPAR . FormalList RPAR LBR StatementList RBR
+
+    ID          shift, and go to state 1
+    Int         shift, and go to state 3
+    String      shift, and go to state 4
+    Intarr      shift, and go to state 5
+    Stringarr   shift, and go to state 6
+    Intlist     shift, and go to state 7
+    Stringlist  shift, and go to state 8
+    Void        shift, and go to state 9
+
+    $default  reduce using rule 14 (FormalList)
+
+    FormalList  go to state 35
+    ClassName   go to state 16
+    Type        go to state 36
+
+
+State 30
+
+   54 Access: PRIVATE . COLON
+
+    COLON  shift, and go to state 37
+
+
+State 31
+
+   53 Access: PUBLIC . COLON
+
+    COLON  shift, and go to state 38
+
+
+State 32
+
+   26 Class: Q_CLASS ClassName LBR ClassStatement . RBR
+
+    RBR  shift, and go to state 39
+
+
+State 33
+
+   30 ClassStatement: Access . ClassDecl ClassStatement
+   31               | Access . MethodDecl ClassStatement
+
+    ID          shift, and go to state 1
+    Int         shift, and go to state 3
+    String      shift, and go to state 4
+    Intarr      shift, and go to state 5
+    Stringarr   shift, and go to state 6
+    Intlist     shift, and go to state 7
+    Stringlist  shift, and go to state 8
+    Void        shift, and go to state 9
+
+    ID          [reduce using rule 12 (MethodDecl)]
+    ID          [reduce using rule 27 (ClassDecl)]
+    Int         [reduce using rule 12 (MethodDecl)]
+    Int         [reduce using rule 27 (ClassDecl)]
+    String      [reduce using rule 12 (MethodDecl)]
+    String      [reduce using rule 27 (ClassDecl)]
+    Intarr      [reduce using rule 12 (MethodDecl)]
+    Intarr      [reduce using rule 27 (ClassDecl)]
+    Stringarr   [reduce using rule 12 (MethodDecl)]
+    Stringarr   [reduce using rule 27 (ClassDecl)]
+    Intlist     [reduce using rule 12 (MethodDecl)]
+    Intlist     [reduce using rule 27 (ClassDecl)]
+    Stringlist  [reduce using rule 12 (MethodDecl)]
+    Stringlist  [reduce using rule 27 (ClassDecl)]
+    PRIVATE     reduce using rule 12 (MethodDecl)
+    PRIVATE     [reduce using rule 27 (ClassDecl)]
+    PUBLIC      reduce using rule 12 (MethodDecl)
+    PUBLIC      [reduce using rule 27 (ClassDecl)]
+    Void        [reduce using rule 12 (MethodDecl)]
+    Void        [reduce using rule 27 (ClassDecl)]
+    RBR         reduce using rule 12 (MethodDecl)
+    RBR         [reduce using rule 27 (ClassDecl)]
+    $default    reduce using rule 12 (MethodDecl)
+
+    Decl        go to state 40
+    Function    go to state 41
+    MethodDecl  go to state 42
+    ClassDecl   go to state 43
+    ClassName   go to state 16
+    Type        go to state 17
+
+
+State 34
+
+    4 MainFunction: Int "main" LPAR . Void RPAR LBR StatementList RBR
+
+    Void  shift, and go to state 44
+
+
+State 35
+
+   10 Function: Type ID LPAR FormalList . RPAR LBR StatementList RBR
+
+    RPAR  shift, and go to state 45
+
+
+State 36
+
+   13 FormalList: Type . ID FormalRest
+
+    ID  shift, and go to state 46
+
+
+State 37
+
+   54 Access: PRIVATE COLON .
+
+    $default  reduce using rule 54 (Access)
+
+
+State 38
+
+   53 Access: PUBLIC COLON .
+
+    $default  reduce using rule 53 (Access)
+
+
+State 39
+
+   26 Class: Q_CLASS ClassName LBR ClassStatement RBR .
+
+    $default  reduce using rule 26 (Class)
+
+
+State 40
+
+   28 ClassDecl: Decl . ClassDecl
+
+    ID          shift, and go to state 1
+    Int         shift, and go to state 3
+    String      shift, and go to state 4
+    Intarr      shift, and go to state 5
+    Stringarr   shift, and go to state 6
+    Intlist     shift, and go to state 7
+    Stringlist  shift, and go to state 8
+    Void        shift, and go to state 9
+
+    ID          [reduce using rule 27 (ClassDecl)]
+    Int         [reduce using rule 27 (ClassDecl)]
+    String      [reduce using rule 27 (ClassDecl)]
+    Intarr      [reduce using rule 27 (ClassDecl)]
+    Stringarr   [reduce using rule 27 (ClassDecl)]
+    Intlist     [reduce using rule 27 (ClassDecl)]
+    Stringlist  [reduce using rule 27 (ClassDecl)]
+    Void        [reduce using rule 27 (ClassDecl)]
+    $default    reduce using rule 27 (ClassDecl)
+
+    Decl       go to state 40
+    ClassDecl  go to state 47
+    ClassName  go to state 16
+    Type       go to state 48
+
+
+State 41
+
+   11 MethodDecl: Function . MethodDecl
+
+    ID          shift, and go to state 1
+    Int         shift, and go to state 3
+    String      shift, and go to state 4
+    Intarr      shift, and go to state 5
+    Stringarr   shift, and go to state 6
+    Intlist     shift, and go to state 7
+    Stringlist  shift, and go to state 8
+    Void        shift, and go to state 9
+
+    ID          [reduce using rule 12 (MethodDecl)]
+    Int         [reduce using rule 12 (MethodDecl)]
+    String      [reduce using rule 12 (MethodDecl)]
+    Intarr      [reduce using rule 12 (MethodDecl)]
+    Stringarr   [reduce using rule 12 (MethodDecl)]
+    Intlist     [reduce using rule 12 (MethodDecl)]
+    Stringlist  [reduce using rule 12 (MethodDecl)]
+    Void        [reduce using rule 12 (MethodDecl)]
+    $default    reduce using rule 12 (MethodDecl)
+
+    Function    go to state 41
+    MethodDecl  go to state 49
+    ClassName   go to state 16
+    Type        go to state 50
+
+
+State 42
+
+   31 ClassStatement: Access MethodDecl . ClassStatement
+
+    PRIVATE  shift, and go to state 30
+    PUBLIC   shift, and go to state 31
+
+    PRIVATE   [reduce using rule 52 (Access)]
+    PUBLIC    [reduce using rule 52 (Access)]
+    RBR       reduce using rule 32 (ClassStatement)
+    RBR       [reduce using rule 52 (Access)]
+    $default  reduce using rule 52 (Access)
+
+    ClassStatement  go to state 51
+    Access          go to state 33
+
+
+State 43
+
+   30 ClassStatement: Access ClassDecl . ClassStatement
+
+    PRIVATE  shift, and go to state 30
+    PUBLIC   shift, and go to state 31
+
+    PRIVATE   [reduce using rule 52 (Access)]
+    PUBLIC    [reduce using rule 52 (Access)]
+    RBR       reduce using rule 32 (ClassStatement)
+    RBR       [reduce using rule 52 (Access)]
+    $default  reduce using rule 52 (Access)
+
+    ClassStatement  go to state 52
+    Access          go to state 33
+
+
+State 44
+
+    4 MainFunction: Int "main" LPAR Void . RPAR LBR StatementList RBR
+
+    RPAR  shift, and go to state 53
+
+
+State 45
+
+   10 Function: Type ID LPAR FormalList RPAR . LBR StatementList RBR
+
+    LBR  shift, and go to state 54
+
+
+State 46
+
+   13 FormalList: Type ID . FormalRest
+
+    COMMA  shift, and go to state 55
+
+    $default  reduce using rule 16 (FormalRest)
+
+    FormalRest  go to state 56
+
+
+State 47
+
+   28 ClassDecl: Decl ClassDecl .
+
+    $default  reduce using rule 28 (ClassDecl)
+
+
+State 48
+
+    5 Decl: Type . ID SEMICOLON
+
+    ID  shift, and go to state 57
+
+
+State 49
+
+   11 MethodDecl: Function MethodDecl .
+
+    $default  reduce using rule 11 (MethodDecl)
+
+
+State 50
+
+   10 Function: Type . ID LPAR FormalList RPAR LBR StatementList RBR
+
+    ID  shift, and go to state 58
+
+
+State 51
+
+   31 ClassStatement: Access MethodDecl ClassStatement .
+
+    $default  reduce using rule 31 (ClassStatement)
+
+
+State 52
+
+   30 ClassStatement: Access ClassDecl ClassStatement .
+
+    $default  reduce using rule 30 (ClassStatement)
+
+
+State 53
+
+    4 MainFunction: Int "main" LPAR Void RPAR . LBR StatementList RBR
+
+    LBR  shift, and go to state 59
+
+
+State 54
+
+   10 Function: Type ID LPAR FormalList RPAR LBR . StatementList RBR
+
+    INTEGER     shift, and go to state 60
+    ID          shift, and go to state 61
+    PLUS        shift, and go to state 62
+    MINUS       shift, and go to state 63
+    LONOT       shift, and go to state 64
+    BOOL        shift, and go to state 65
+    Int         shift, and go to state 3
+    String      shift, and go to state 4
+    Intarr      shift, and go to state 5
+    Stringarr   shift, and go to state 6
+    Intlist     shift, and go to state 7
+    Stringlist  shift, and go to state 8
+    IF          shift, and go to state 66
+    RET         shift, and go to state 67
+    THIS        shift, and go to state 68
+    Void        shift, and go to state 9
+    WHILE       shift, and go to state 69
+    LPAR        shift, and go to state 70
+    "cout"      shift, and go to state 71
+    "cin"       shift, and go to state 72
+
+    $default  reduce using rule 18 (StatementList)
+
+    Decl           go to state 73
+    StatementList  go to state 74
+    Statement      go to state 75
+    ClassName      go to state 16
+    Exp            go to state 76
+    Sign           go to state 77
+    Type           go to state 48
+
+
+State 55
+
+   15 FormalRest: COMMA . Type ID FormalRest
+
+    ID          shift, and go to state 1
+    Int         shift, and go to state 3
+    String      shift, and go to state 4
+    Intarr      shift, and go to state 5
+    Stringarr   shift, and go to state 6
+    Intlist     shift, and go to state 7
+    Stringlist  shift, and go to state 8
+    Void        shift, and go to state 9
+
+    ClassName  go to state 16
+    Type       go to state 78
+
+
+State 56
+
+   13 FormalList: Type ID FormalRest .
+
+    $default  reduce using rule 13 (FormalList)
+
+
+State 57
+
+    5 Decl: Type ID . SEMICOLON
+
+    SEMICOLON  shift, and go to state 28
+
+
+State 58
+
+   10 Function: Type ID . LPAR FormalList RPAR LBR StatementList RBR
+
+    LPAR  shift, and go to state 29
+
+
+State 59
+
+    4 MainFunction: Int "main" LPAR Void RPAR LBR . StatementList RBR
+
+    INTEGER     shift, and go to state 60
+    ID          shift, and go to state 61
+    PLUS        shift, and go to state 62
+    MINUS       shift, and go to state 63
+    LONOT       shift, and go to state 64
+    BOOL        shift, and go to state 65
+    Int         shift, and go to state 3
+    String      shift, and go to state 4
+    Intarr      shift, and go to state 5
+    Stringarr   shift, and go to state 6
+    Intlist     shift, and go to state 7
+    Stringlist  shift, and go to state 8
+    IF          shift, and go to state 66
+    RET         shift, and go to state 67
+    THIS        shift, and go to state 68
+    Void        shift, and go to state 9
+    WHILE       shift, and go to state 69
+    LPAR        shift, and go to state 70
+    "cout"      shift, and go to state 71
+    "cin"       shift, and go to state 72
+
+    $default  reduce using rule 18 (StatementList)
+
+    Decl           go to state 73
+    StatementList  go to state 79
+    Statement      go to state 75
+    ClassName      go to state 16
+    Exp            go to state 76
+    Sign           go to state 77
+    Type           go to state 48
+
+
+State 60
+
+   33 Exp: INTEGER . Op
+   34    | INTEGER . Op1
+   42    | INTEGER .
+
+    PLUS   shift, and go to state 80
+    MINUS  shift, and go to state 81
+    DIV    shift, and go to state 82
+    MOD    shift, and go to state 83
+    TIMES  shift, and go to state 84
+    EQUAL  shift, and go to state 85
+    LEQ    shift, and go to state 86
+    GEQ    shift, and go to state 87
+    LESS   shift, and go to state 88
+    GREAT  shift, and go to state 89
+    LOAND  shift, and go to state 90
+    LOOR   shift, and go to state 91
+
+    $default  reduce using rule 42 (Exp)
+
+    Op   go to state 92
+    Op1  go to state 93
+
+
+State 61
+
+   29 ClassName: ID .
+   37 Exp: ID . Op2
+   39    | ID . IDList
+   44    | ID .
+
+    COMMA   shift, and go to state 94
+    DOT     shift, and go to state 95
+    ASSIGN  shift, and go to state 96
+
+    SEMICOLON  reduce using rule 44 (Exp)
+    SEMICOLON  [reduce using rule 49 (IDList)]
+    $default   reduce using rule 29 (ClassName)
+
+    IDList  go to state 97
+    Op2     go to state 98
+
+
+State 62
+
+   51 Sign: PLUS . INTEGER
+
+    INTEGER  shift, and go to state 99
+
+
+State 63
+
+   50 Sign: MINUS . INTEGER
+
+    INTEGER  shift, and go to state 100
+
+
+State 64
+
+   36 Exp: LONOT . Exp
+
+    INTEGER  shift, and go to state 60
+    ID       shift, and go to state 101
+    PLUS     shift, and go to state 62
+    MINUS    shift, and go to state 63
+    LONOT    shift, and go to state 64
+    BOOL     shift, and go to state 65
+    THIS     shift, and go to state 68
+    LPAR     shift, and go to state 70
+
+    Exp   go to state 102
+    Sign  go to state 77
+
+
+State 65
+
+   35 Exp: BOOL . Op1
+   43    | BOOL .
+
+    EQUAL  shift, and go to state 85
+    LEQ    shift, and go to state 86
+    GEQ    shift, and go to state 87
+    LESS   shift, and go to state 88
+    GREAT  shift, and go to state 89
+    LOAND  shift, and go to state 90
+    LOOR   shift, and go to state 91
+
+    $default  reduce using rule 43 (Exp)
+
+    Op1  go to state 103
+
+
+State 66
+
+   20 Statement: IF . LPAR Exp RPAR LBR StatementList RBR
+
+    LPAR  shift, and go to state 104
+
+
+State 67
+
+   25 Statement: RET . Exp SEMICOLON
+
+    INTEGER  shift, and go to state 60
+    ID       shift, and go to state 101
+    PLUS     shift, and go to state 62
+    MINUS    shift, and go to state 63
+    LONOT    shift, and go to state 64
+    BOOL     shift, and go to state 65
+    THIS     shift, and go to state 68
+    LPAR     shift, and go to state 70
+
+    Exp   go to state 105
+    Sign  go to state 77
+
+
+State 68
+
+   38 Exp: THIS . IDList
+
+    COMMA  shift, and go to state 94
+    DOT    shift, and go to state 95
+
+    $default  reduce using rule 49 (IDList)
+
+    IDList  go to state 106
+
+
+State 69
+
+   21 Statement: WHILE . LPAR Exp RPAR LBR StatementList RBR
+
+    LPAR  shift, and go to state 107
+
+
+State 70
+
+   40 Exp: LPAR . Exp RPAR
+
+    INTEGER  shift, and go to state 60
+    ID       shift, and go to state 101
+    PLUS     shift, and go to state 62
+    MINUS    shift, and go to state 63
+    LONOT    shift, and go to state 64
+    BOOL     shift, and go to state 65
+    THIS     shift, and go to state 68
+    LPAR     shift, and go to state 70
+
+    Exp   go to state 108
+    Sign  go to state 77
+
+
+State 71
+
+   22 Statement: "cout" . INJECT ID INJECT "endl" SEMICOLON
+
+    INJECT  shift, and go to state 109
+
+
+State 72
+
+   23 Statement: "cin" . EXTRACT ID SEMICOLON
+
+    EXTRACT  shift, and go to state 110
+
+
+State 73
+
+   19 Statement: Decl .
+
+    $default  reduce using rule 19 (Statement)
+
+
+State 74
+
+   10 Function: Type ID LPAR FormalList RPAR LBR StatementList . RBR
+
+    RBR  shift, and go to state 111
+
+
+State 75
+
+   17 StatementList: Statement . StatementList
+
+    INTEGER     shift, and go to state 60
+    ID          shift, and go to state 61
+    PLUS        shift, and go to state 62
+    MINUS       shift, and go to state 63
+    LONOT       shift, and go to state 64
+    BOOL        shift, and go to state 65
+    Int         shift, and go to state 3
+    String      shift, and go to state 4
+    Intarr      shift, and go to state 5
+    Stringarr   shift, and go to state 6
+    Intlist     shift, and go to state 7
+    Stringlist  shift, and go to state 8
+    IF          shift, and go to state 66
+    RET         shift, and go to state 67
+    THIS        shift, and go to state 68
+    Void        shift, and go to state 9
+    WHILE       shift, and go to state 69
+    LPAR        shift, and go to state 70
+    "cout"      shift, and go to state 71
+    "cin"       shift, and go to state 72
+
+    $default  reduce using rule 18 (StatementList)
+
+    Decl           go to state 73
+    StatementList  go to state 112
+    Statement      go to state 75
+    ClassName      go to state 16
+    Exp            go to state 76
+    Sign           go to state 77
+    Type           go to state 48
+
+
+State 76
+
+   24 Statement: Exp . SEMICOLON
+
+    SEMICOLON  shift, and go to state 113
+
+
+State 77
+
+   41 Exp: Sign .
+
+    $default  reduce using rule 41 (Exp)
+
+
+State 78
+
+   15 FormalRest: COMMA Type . ID FormalRest
+
+    ID  shift, and go to state 114
+
+
+State 79
+
+    4 MainFunction: Int "main" LPAR Void RPAR LBR StatementList . RBR
+
+    RBR  shift, and go to state 115
+
+
+State 80
+
+   63 Op: PLUS . Exp
+
+    INTEGER  shift, and go to state 60
+    ID       shift, and go to state 101
+    PLUS     shift, and go to state 62
+    MINUS    shift, and go to state 63
+    LONOT    shift, and go to state 64
+    BOOL     shift, and go to state 65
+    THIS     shift, and go to state 68
+    LPAR     shift, and go to state 70
+
+    Exp   go to state 116
+    Sign  go to state 77
+
+
+State 81
+
+   64 Op: MINUS . Exp
+
+    INTEGER  shift, and go to state 60
+    ID       shift, and go to state 101
+    PLUS     shift, and go to state 62
+    MINUS    shift, and go to state 63
+    LONOT    shift, and go to state 64
+    BOOL     shift, and go to state 65
+    THIS     shift, and go to state 68
+    LPAR     shift, and go to state 70
+
+    Exp   go to state 117
+    Sign  go to state 77
+
+
+State 82
+
+   66 Op: DIV . Exp
+
+    INTEGER  shift, and go to state 60
+    ID       shift, and go to state 101
+    PLUS     shift, and go to state 62
+    MINUS    shift, and go to state 63
+    LONOT    shift, and go to state 64
+    BOOL     shift, and go to state 65
+    THIS     shift, and go to state 68
+    LPAR     shift, and go to state 70
+
+    Exp   go to state 118
+    Sign  go to state 77
+
+
+State 83
+
+   67 Op: MOD . Exp
+
+    INTEGER  shift, and go to state 60
+    ID       shift, and go to state 101
+    PLUS     shift, and go to state 62
+    MINUS    shift, and go to state 63
+    LONOT    shift, and go to state 64
+    BOOL     shift, and go to state 65
+    THIS     shift, and go to state 68
+    LPAR     shift, and go to state 70
+
+    Exp   go to state 119
+    Sign  go to state 77
+
+
+State 84
+
+   65 Op: TIMES . Exp
+
+    INTEGER  shift, and go to state 60
+    ID       shift, and go to state 101
+    PLUS     shift, and go to state 62
+    MINUS    shift, and go to state 63
+    LONOT    shift, and go to state 64
+    BOOL     shift, and go to state 65
+    THIS     shift, and go to state 68
+    LPAR     shift, and go to state 70
+
+    Exp   go to state 120
+    Sign  go to state 77
+
+
+State 85
+
+   74 Op1: EQUAL . Exp
+
+    INTEGER  shift, and go to state 60
+    ID       shift, and go to state 101
+    PLUS     shift, and go to state 62
+    MINUS    shift, and go to state 63
+    LONOT    shift, and go to state 64
+    BOOL     shift, and go to state 65
+    THIS     shift, and go to state 68
+    LPAR     shift, and go to state 70
+
+    Exp   go to state 121
+    Sign  go to state 77
+
+
+State 86
+
+   73 Op1: LEQ . Exp
+
+    INTEGER  shift, and go to state 60
+    ID       shift, and go to state 101
+    PLUS     shift, and go to state 62
+    MINUS    shift, and go to state 63
+    LONOT    shift, and go to state 64
+    BOOL     shift, and go to state 65
+    THIS     shift, and go to state 68
+    LPAR     shift, and go to state 70
+
+    Exp   go to state 122
+    Sign  go to state 77
+
+
+State 87
+
+   72 Op1: GEQ . Exp
+
+    INTEGER  shift, and go to state 60
+    ID       shift, and go to state 101
+    PLUS     shift, and go to state 62
+    MINUS    shift, and go to state 63
+    LONOT    shift, and go to state 64
+    BOOL     shift, and go to state 65
+    THIS     shift, and go to state 68
+    LPAR     shift, and go to state 70
+
+    Exp   go to state 123
+    Sign  go to state 77
+
+
+State 88
+
+   70 Op1: LESS . Exp
+
+    INTEGER  shift, and go to state 60
+    ID       shift, and go to state 101
+    PLUS     shift, and go to state 62
+    MINUS    shift, and go to state 63
+    LONOT    shift, and go to state 64
+    BOOL     shift, and go to state 65
+    THIS     shift, and go to state 68
+    LPAR     shift, and go to state 70
+
+    Exp   go to state 124
+    Sign  go to state 77
+
+
+State 89
+
+   71 Op1: GREAT . Exp
+
+    INTEGER  shift, and go to state 60
+    ID       shift, and go to state 101
+    PLUS     shift, and go to state 62
+    MINUS    shift, and go to state 63
+    LONOT    shift, and go to state 64
+    BOOL     shift, and go to state 65
+    THIS     shift, and go to state 68
+    LPAR     shift, and go to state 70
+
+    Exp   go to state 125
+    Sign  go to state 77
+
+
+State 90
+
+   68 Op1: LOAND . Exp
+
+    INTEGER  shift, and go to state 60
+    ID       shift, and go to state 101
+    PLUS     shift, and go to state 62
+    MINUS    shift, and go to state 63
+    LONOT    shift, and go to state 64
+    BOOL     shift, and go to state 65
+    THIS     shift, and go to state 68
+    LPAR     shift, and go to state 70
+
+    Exp   go to state 126
+    Sign  go to state 77
+
+
+State 91
+
+   69 Op1: LOOR . Exp
+
+    INTEGER  shift, and go to state 60
+    ID       shift, and go to state 101
+    PLUS     shift, and go to state 62
+    MINUS    shift, and go to state 63
+    LONOT    shift, and go to state 64
+    BOOL     shift, and go to state 65
+    THIS     shift, and go to state 68
+    LPAR     shift, and go to state 70
+
+    Exp   go to state 127
+    Sign  go to state 77
+
+
+State 92
+
+   33 Exp: INTEGER Op .
+
+    $default  reduce using rule 33 (Exp)
+
+
+State 93
+
+   34 Exp: INTEGER Op1 .
+
+    $default  reduce using rule 34 (Exp)
+
+
+State 94
+
+   48 IDList: COMMA . ID IDList
+
+    ID  shift, and go to state 128
+
+
+State 95
+
+   45 IDList: DOT . ID IDList
+   46       | DOT . ID LPAR FormalList RPAR
+   47       | DOT . SIZE LPAR RPAR
+
+    ID    shift, and go to state 129
+    SIZE  shift, and go to state 130
+
+
+State 96
+
+   75 Op2: ASSIGN . Exp
+
+    INTEGER  shift, and go to state 60
+    ID       shift, and go to state 101
+    PLUS     shift, and go to state 62
+    MINUS    shift, and go to state 63
+    LONOT    shift, and go to state 64
+    BOOL     shift, and go to state 65
+    THIS     shift, and go to state 68
+    LPAR     shift, and go to state 70
+
+    Exp   go to state 131
+    Sign  go to state 77
+
+
+State 97
+
+   39 Exp: ID IDList .
+
+    $default  reduce using rule 39 (Exp)
+
+
+State 98
+
+   37 Exp: ID Op2 .
+
+    $default  reduce using rule 37 (Exp)
+
+
+State 99
+
+   51 Sign: PLUS INTEGER .
+
+    $default  reduce using rule 51 (Sign)
+
+
+State 100
+
+   50 Sign: MINUS INTEGER .
+
+    $default  reduce using rule 50 (Sign)
+
+
+State 101
+
+   37 Exp: ID . Op2
+   39    | ID . IDList
+   44    | ID .
+
+    COMMA   shift, and go to state 94
+    DOT     shift, and go to state 95
+    ASSIGN  shift, and go to state 96
+
+    SEMICOLON  reduce using rule 44 (Exp)
+    SEMICOLON  [reduce using rule 49 (IDList)]
+    RPAR       reduce using rule 44 (Exp)
+    RPAR       [reduce using rule 49 (IDList)]
+    $default   reduce using rule 44 (Exp)
+
+    IDList  go to state 97
+    Op2     go to state 98
+
+
+State 102
+
+   36 Exp: LONOT Exp .
+
+    $default  reduce using rule 36 (Exp)
+
+
+State 103
+
+   35 Exp: BOOL Op1 .
+
+    $default  reduce using rule 35 (Exp)
+
+
+State 104
+
+   20 Statement: IF LPAR . Exp RPAR LBR StatementList RBR
+
+    INTEGER  shift, and go to state 60
+    ID       shift, and go to state 101
+    PLUS     shift, and go to state 62
+    MINUS    shift, and go to state 63
+    LONOT    shift, and go to state 64
+    BOOL     shift, and go to state 65
+    THIS     shift, and go to state 68
+    LPAR     shift, and go to state 70
+
+    Exp   go to state 132
+    Sign  go to state 77
+
+
+State 105
+
+   25 Statement: RET Exp . SEMICOLON
+
+    SEMICOLON  shift, and go to state 133
+
+
+State 106
+
+   38 Exp: THIS IDList .
+
+    $default  reduce using rule 38 (Exp)
+
+
+State 107
+
+   21 Statement: WHILE LPAR . Exp RPAR LBR StatementList RBR
+
+    INTEGER  shift, and go to state 60
+    ID       shift, and go to state 101
+    PLUS     shift, and go to state 62
+    MINUS    shift, and go to state 63
+    LONOT    shift, and go to state 64
+    BOOL     shift, and go to state 65
+    THIS     shift, and go to state 68
+    LPAR     shift, and go to state 70
+
+    Exp   go to state 134
+    Sign  go to state 77
+
+
+State 108
+
+   40 Exp: LPAR Exp . RPAR
+
+    RPAR  shift, and go to state 135
+
+
+State 109
+
+   22 Statement: "cout" INJECT . ID INJECT "endl" SEMICOLON
+
+    ID  shift, and go to state 136
+
+
+State 110
+
+   23 Statement: "cin" EXTRACT . ID SEMICOLON
+
+    ID  shift, and go to state 137
+
+
+State 111
+
+   10 Function: Type ID LPAR FormalList RPAR LBR StatementList RBR .
+
+    $default  reduce using rule 10 (Function)
+
+
+State 112
+
+   17 StatementList: Statement StatementList .
+
+    $default  reduce using rule 17 (StatementList)
+
+
+State 113
+
+   24 Statement: Exp SEMICOLON .
+
+    $default  reduce using rule 24 (Statement)
+
+
+State 114
+
+   15 FormalRest: COMMA Type ID . FormalRest
+
+    COMMA  shift, and go to state 55
+
+    $default  reduce using rule 16 (FormalRest)
+
+    FormalRest  go to state 138
+
+
+State 115
+
+    4 MainFunction: Int "main" LPAR Void RPAR LBR StatementList RBR .
+
+    $default  reduce using rule 4 (MainFunction)
+
+
+State 116
+
+   63 Op: PLUS Exp .
+
+    $default  reduce using rule 63 (Op)
+
+
+State 117
+
+   64 Op: MINUS Exp .
+
+    $default  reduce using rule 64 (Op)
+
+
+State 118
+
+   66 Op: DIV Exp .
+
+    $default  reduce using rule 66 (Op)
+
+
+State 119
+
+   67 Op: MOD Exp .
+
+    $default  reduce using rule 67 (Op)
+
+
+State 120
+
+   65 Op: TIMES Exp .
+
+    $default  reduce using rule 65 (Op)
+
+
+State 121
+
+   74 Op1: EQUAL Exp .
+
+    $default  reduce using rule 74 (Op1)
+
+
+State 122
+
+   73 Op1: LEQ Exp .
+
+    $default  reduce using rule 73 (Op1)
+
+
+State 123
+
+   72 Op1: GEQ Exp .
+
+    $default  reduce using rule 72 (Op1)
+
+
+State 124
+
+   70 Op1: LESS Exp .
+
+    $default  reduce using rule 70 (Op1)
+
+
+State 125
+
+   71 Op1: GREAT Exp .
+
+    $default  reduce using rule 71 (Op1)
+
+
+State 126
+
+   68 Op1: LOAND Exp .
+
+    $default  reduce using rule 68 (Op1)
+
+
+State 127
+
+   69 Op1: LOOR Exp .
+
+    $default  reduce using rule 69 (Op1)
+
+
+State 128
+
+   48 IDList: COMMA ID . IDList
+
+    COMMA  shift, and go to state 94
+    DOT    shift, and go to state 95
+
+    $default  reduce using rule 49 (IDList)
+
+    IDList  go to state 139
+
+
+State 129
+
+   45 IDList: DOT ID . IDList
+   46       | DOT ID . LPAR FormalList RPAR
+
+    COMMA  shift, and go to state 94
+    DOT    shift, and go to state 95
+    LPAR   shift, and go to state 140
+
+    $default  reduce using rule 49 (IDList)
+
+    IDList  go to state 141
+
+
+State 130
+
+   47 IDList: DOT SIZE . LPAR RPAR
+
+    LPAR  shift, and go to state 142
+
+
+State 131
+
+   75 Op2: ASSIGN Exp .
+
+    $default  reduce using rule 75 (Op2)
+
+
+State 132
+
+   20 Statement: IF LPAR Exp . RPAR LBR StatementList RBR
+
+    RPAR  shift, and go to state 143
+
+
+State 133
+
+   25 Statement: RET Exp SEMICOLON .
+
+    $default  reduce using rule 25 (Statement)
+
+
+State 134
+
+   21 Statement: WHILE LPAR Exp . RPAR LBR StatementList RBR
+
+    RPAR  shift, and go to state 144
+
+
+State 135
+
+   40 Exp: LPAR Exp RPAR .
+
+    $default  reduce using rule 40 (Exp)
+
+
+State 136
+
+   22 Statement: "cout" INJECT ID . INJECT "endl" SEMICOLON
+
+    INJECT  shift, and go to state 145
+
+
+State 137
+
+   23 Statement: "cin" EXTRACT ID . SEMICOLON
+
+    SEMICOLON  shift, and go to state 146
+
+
+State 138
+
+   15 FormalRest: COMMA Type ID FormalRest .
+
+    $default  reduce using rule 15 (FormalRest)
+
+
+State 139
+
+   48 IDList: COMMA ID IDList .
+
+    $default  reduce using rule 48 (IDList)
+
+
+State 140
+
+   46 IDList: DOT ID LPAR . FormalList RPAR
+
+    ID          shift, and go to state 1
+    Int         shift, and go to state 3
+    String      shift, and go to state 4
+    Intarr      shift, and go to state 5
+    Stringarr   shift, and go to state 6
+    Intlist     shift, and go to state 7
+    Stringlist  shift, and go to state 8
+    Void        shift, and go to state 9
+
+    $default  reduce using rule 14 (FormalList)
+
+    FormalList  go to state 147
+    ClassName   go to state 16
+    Type        go to state 36
+
+
+State 141
+
+   45 IDList: DOT ID IDList .
+
+    $default  reduce using rule 45 (IDList)
+
+
+State 142
+
+   47 IDList: DOT SIZE LPAR . RPAR
+
+    RPAR  shift, and go to state 148
+
+
+State 143
+
+   20 Statement: IF LPAR Exp RPAR . LBR StatementList RBR
+
+    LBR  shift, and go to state 149
+
+
+State 144
+
+   21 Statement: WHILE LPAR Exp RPAR . LBR StatementList RBR
+
+    LBR  shift, and go to state 150
+
+
+State 145
+
+   22 Statement: "cout" INJECT ID INJECT . "endl" SEMICOLON
+
+    "endl"  shift, and go to state 151
+
+
+State 146
+
+   23 Statement: "cin" EXTRACT ID SEMICOLON .
+
+    $default  reduce using rule 23 (Statement)
+
+
+State 147
+
+   46 IDList: DOT ID LPAR FormalList . RPAR
+
+    RPAR  shift, and go to state 152
+
+
+State 148
+
+   47 IDList: DOT SIZE LPAR RPAR .
+
+    $default  reduce using rule 47 (IDList)
+
+
+State 149
+
+   20 Statement: IF LPAR Exp RPAR LBR . StatementList RBR
+
+    INTEGER     shift, and go to state 60
+    ID          shift, and go to state 61
+    PLUS        shift, and go to state 62
+    MINUS       shift, and go to state 63
+    LONOT       shift, and go to state 64
+    BOOL        shift, and go to state 65
+    Int         shift, and go to state 3
+    String      shift, and go to state 4
+    Intarr      shift, and go to state 5
+    Stringarr   shift, and go to state 6
+    Intlist     shift, and go to state 7
+    Stringlist  shift, and go to state 8
+    IF          shift, and go to state 66
+    RET         shift, and go to state 67
+    THIS        shift, and go to state 68
+    Void        shift, and go to state 9
+    WHILE       shift, and go to state 69
+    LPAR        shift, and go to state 70
+    "cout"      shift, and go to state 71
+    "cin"       shift, and go to state 72
+
+    $default  reduce using rule 18 (StatementList)
+
+    Decl           go to state 73
+    StatementList  go to state 153
+    Statement      go to state 75
+    ClassName      go to state 16
+    Exp            go to state 76
+    Sign           go to state 77
+    Type           go to state 48
+
+
+State 150
+
+   21 Statement: WHILE LPAR Exp RPAR LBR . StatementList RBR
+
+    INTEGER     shift, and go to state 60
+    ID          shift, and go to state 61
+    PLUS        shift, and go to state 62
+    MINUS       shift, and go to state 63
+    LONOT       shift, and go to state 64
+    BOOL        shift, and go to state 65
+    Int         shift, and go to state 3
+    String      shift, and go to state 4
+    Intarr      shift, and go to state 5
+    Stringarr   shift, and go to state 6
+    Intlist     shift, and go to state 7
+    Stringlist  shift, and go to state 8
+    IF          shift, and go to state 66
+    RET         shift, and go to state 67
+    THIS        shift, and go to state 68
+    Void        shift, and go to state 9
+    WHILE       shift, and go to state 69
+    LPAR        shift, and go to state 70
+    "cout"      shift, and go to state 71
+    "cin"       shift, and go to state 72
+
+    $default  reduce using rule 18 (StatementList)
+
+    Decl           go to state 73
+    StatementList  go to state 154
+    Statement      go to state 75
+    ClassName      go to state 16
+    Exp            go to state 76
+    Sign           go to state 77
+    Type           go to state 48
+
+
+State 151
+
+   22 Statement: "cout" INJECT ID INJECT "endl" . SEMICOLON
+
+    SEMICOLON  shift, and go to state 155
+
+
+State 152
+
+   46 IDList: DOT ID LPAR FormalList RPAR .
+
+    $default  reduce using rule 46 (IDList)
+
+
+State 153
+
+   20 Statement: IF LPAR Exp RPAR LBR StatementList . RBR
+
+    RBR  shift, and go to state 156
+
+
+State 154
+
+   21 Statement: WHILE LPAR Exp RPAR LBR StatementList . RBR
+
+    RBR  shift, and go to state 157
+
+
+State 155
+
+   22 Statement: "cout" INJECT ID INJECT "endl" SEMICOLON .
+
+    $default  reduce using rule 22 (Statement)
+
+
+State 156
+
+   20 Statement: IF LPAR Exp RPAR LBR StatementList RBR .
+
+    $default  reduce using rule 20 (Statement)
+
+
+State 157
+
+   21 Statement: WHILE LPAR Exp RPAR LBR StatementList RBR .
+
+    $default  reduce using rule 21 (Statement)

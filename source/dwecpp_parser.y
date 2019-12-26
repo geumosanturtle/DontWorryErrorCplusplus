@@ -26,9 +26,10 @@
 
 %right UMINUS UPLUS
 %%
-Program		:	FunctionList
+Program		:  FunctionList MainFunction
 		;
-FunctionList 	:	DeclList MainFunction
+FunctionList 	:	DeclList 
+			  |
 		;
 
 MainFunction	:	Int "main" LPAR Void RPAR LBR StatementList RBR
@@ -60,13 +61,13 @@ Statement	:	Decl
 	|	WHILE LPAR Exp RPAR LBR StatementList RBR
 	|	"cout" INJECT ID INJECT "endl" SEMICOLON
 	|	"cin" EXTRACT ID SEMICOLON
-	|	Exp
-	| 	RET Exp
+	|	Exp SEMICOLON
+	| 	RET Exp SEMICOLON
 	;
 Class	:	Q_CLASS ClassName LBR ClassStatement RBR
 	;
 ClassDecl 	: 
-		|	Decl ClassDecl
+		|	Decl ClassDecl 
 		;
 ClassName	:	ID
 	;
@@ -110,6 +111,7 @@ Type	:	Int	{printf("Type");}
 	|	Intlist
 	|	Stringlist
 	|	Void
+	|   ClassName
 	;
 
 

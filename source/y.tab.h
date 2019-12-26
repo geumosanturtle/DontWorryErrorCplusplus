@@ -47,103 +47,133 @@ extern int yydebug;
   {
     INTEGER = 258,
     STRING = 259,
-    SIZE = 260,
-    THIS = 261,
-    ID = 262,
-    BOOL = 263,
-    Q_CLASS = 264,
-    PRIVATE = 265,
-    PUBLIC = 266,
-    Int = 267,
-    String = 268,
-    Intarr = 269,
-    Stringarr = 270,
-    Intlist = 271,
-    Stringlist = 272,
-    Void = 273,
-    RET = 274,
-    LBR = 275,
-    RBR = 276,
-    COMMA = 277,
-    SEMICOLON = 278,
-    COLON = 279,
-    LOAND = 280,
-    LOOR = 281,
-    LONOT = 282,
+    ID = 260,
+    SEMICOLON = 261,
+    COMMA = 262,
+    COLONCOLON = 263,
+    DOT = 264,
+    ASSIGN = 265,
+    PAS = 266,
+    MAS = 267,
+    TIMESAS = 268,
+    DIVAS = 269,
+    MODAS = 270,
+    SIZE = 271,
+    PLUS = 272,
+    MINUS = 273,
+    DIV = 274,
+    MOD = 275,
+    TIMES = 276,
+    INJECT = 277,
+    EXTRACT = 278,
+    EQUAL = 279,
+    NEQ = 280,
+    LEQ = 281,
+    GEQ = 282,
     LESS = 283,
     GREAT = 284,
-    LEQ = 285,
-    GEQ = 286,
-    ASSIGN = 287,
-    EQUAL = 288,
-    PLUS = 289,
-    MINUS = 290,
-    TIMES = 291,
-    MOD = 292,
-    DIV = 293,
-    INJECT = 294,
-    EXTRACT = 295,
-    LPAR = 296,
-    RPAR = 297,
-    UMINUS = 298,
-    UPLUS = 299
+    LOAND = 285,
+    LOOR = 286,
+    LONOT = 287,
+    PLUSPLUS = 288,
+    MINUSMINUS = 289,
+    BOOL = 290,
+    Q_CLASS = 291,
+    ELSE = 292,
+    FALSE = 293,
+    Int = 294,
+    String = 295,
+    Intarr = 296,
+    Stringarr = 297,
+    Intlist = 298,
+    Stringlist = 299,
+    IF = 300,
+    PRIVATE = 301,
+    PUBLIC = 302,
+    RET = 303,
+    COLON = 304,
+    THIS = 305,
+    TRUE = 306,
+    Void = 307,
+    WHILE = 308,
+    LBR = 309,
+    RBR = 310,
+    LPAR = 311,
+    RPAR = 312,
+    UMINUS = 313,
+    UPLUS = 314
   };
 #endif
 /* Tokens.  */
 #define INTEGER 258
 #define STRING 259
-#define SIZE 260
-#define THIS 261
-#define ID 262
-#define BOOL 263
-#define Q_CLASS 264
-#define PRIVATE 265
-#define PUBLIC 266
-#define Int 267
-#define String 268
-#define Intarr 269
-#define Stringarr 270
-#define Intlist 271
-#define Stringlist 272
-#define Void 273
-#define RET 274
-#define LBR 275
-#define RBR 276
-#define COMMA 277
-#define SEMICOLON 278
-#define COLON 279
-#define LOAND 280
-#define LOOR 281
-#define LONOT 282
+#define ID 260
+#define SEMICOLON 261
+#define COMMA 262
+#define COLONCOLON 263
+#define DOT 264
+#define ASSIGN 265
+#define PAS 266
+#define MAS 267
+#define TIMESAS 268
+#define DIVAS 269
+#define MODAS 270
+#define SIZE 271
+#define PLUS 272
+#define MINUS 273
+#define DIV 274
+#define MOD 275
+#define TIMES 276
+#define INJECT 277
+#define EXTRACT 278
+#define EQUAL 279
+#define NEQ 280
+#define LEQ 281
+#define GEQ 282
 #define LESS 283
 #define GREAT 284
-#define LEQ 285
-#define GEQ 286
-#define ASSIGN 287
-#define EQUAL 288
-#define PLUS 289
-#define MINUS 290
-#define TIMES 291
-#define MOD 292
-#define DIV 293
-#define INJECT 294
-#define EXTRACT 295
-#define LPAR 296
-#define RPAR 297
-#define UMINUS 298
-#define UPLUS 299
+#define LOAND 285
+#define LOOR 286
+#define LONOT 287
+#define PLUSPLUS 288
+#define MINUSMINUS 289
+#define BOOL 290
+#define Q_CLASS 291
+#define ELSE 292
+#define FALSE 293
+#define Int 294
+#define String 295
+#define Intarr 296
+#define Stringarr 297
+#define Intlist 298
+#define Stringlist 299
+#define IF 300
+#define PRIVATE 301
+#define PUBLIC 302
+#define RET 303
+#define COLON 304
+#define THIS 305
+#define TRUE 306
+#define Void 307
+#define WHILE 308
+#define LBR 309
+#define RBR 310
+#define LPAR 311
+#define RPAR 312
+#define UMINUS 313
+#define UPLUS 314
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 
 union YYSTYPE
 {
-#line 8 "project.y" /* yacc.c:1909  */
+#line 8 "dwecpp_parser.y" /* yacc.c:1909  */
 
 	char* sval;
 	int ival;
 
-#line 147 "y.tab.h" /* yacc.c:1909  */
+#line 177 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
