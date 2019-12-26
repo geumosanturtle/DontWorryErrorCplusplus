@@ -1,9 +1,15 @@
 %{
 	#include <iostream>
-	//#include <ctype>
+	#include <cctype>
 	#include <cstdio>
+	#include <vector>
+	#include "symtable.h"
+	using namespace std;	
 	int yyerror(const char *);
 	int yylex();
+	vector<symboltable*> sym_tbl;
+	symboltable global;
+	sym_tbl.push_back(&global);
 %}
 %union{
 	char* sval;
@@ -114,7 +120,7 @@ Statement	  : DeclStatement
 		  	  |	COUT INJECT Exp INJECT ENDL SEMICOLON
 			  |	CIN EXTRACT Exp SEMICOLON
 			  | RET Exp SEMICOLON
-			  | ClassName DOT ID LPAR Exp RPAR SEMICOLON
+			  | ClassName DOT ID LPAR ExpList RPAR SEMICOLON
 			  | SEMICOLON	
 			  ;
 
@@ -123,17 +129,20 @@ DeclStatement : Decl SEMICOLON
 
 /* Evaluate Expression */
 
+ExpList 	  : Exp ExpRest
+		   	  |
+			  ;
+
+ExpRest		  : COMMA Exp ExpRest
+		  	  |
+			  ; 
+
 
 BOOLEAN 	  : TRUE
 		 	  | FALSE
 			  ;
 
-Exp			  : LPAR Exp RPAR	
-			  | BOOLEAN 
-			  | INTEGER
-			  | STRING
-			  | ID
-			  | Exp PLUS Exp | Exp MINUS Exp | Exp TIMES Exp
+Exp			  : Exp PLUS Exp | Exp MINUS Exp | Exp TIMES Exp
 			  | Exp DIV Exp
 			  | Exp MOD Exp
 			  | Exp EQUAL Exp
@@ -156,11 +165,17 @@ Exp			  : LPAR Exp RPAR
 			  | Exp DIVAS Exp
 			  | Exp MODAS Exp 
 			  | Exp ASSIGN Exp
+			  | LPAR Exp RPAR
+			  | BOOLEAN
+		  	  | INTEGER
+			  | STRING
+			  | ID
+			  |
 			  ;
 
 
 %%
 int main() { yyparse(); return 0;}
-int yyerror(const char *msg){ fputs(msg,stdout);}
+int yyerror(const char *msg){ cout << msg << endl; return -1;}
 
 

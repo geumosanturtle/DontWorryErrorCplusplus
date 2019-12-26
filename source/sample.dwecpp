@@ -5,9 +5,9 @@ class yallacha {
 	public:
 		void print(){
 			x = 6;
-			if(x!=4){x=0;}
+			if (x !=9 ) { x = 0; }
 			cout << x << endl;
-			cout << y << endl;
+			cout << y << endl;	
 		}
 };
 

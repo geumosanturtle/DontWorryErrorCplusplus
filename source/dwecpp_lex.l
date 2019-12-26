@@ -15,7 +15,7 @@
 	}
 %}
 
-StringInput	([^"])|(\\.)
+StringInput	([^";:])|(\\.)
 Integer		[0-9]+
 Identifier	[A-Za-z_][A-Za-z0-9_]*
 Whitespace  [\t\f\v ]+
@@ -38,11 +38,11 @@ Integer		{ yylval.ival = atoi(yytext); printf("INT(%s)",yytext); return INTEGER;
 "void"					{printf("VOID");	return Void;}
 
 
-"class"					{ return Q_CLASS; }
-"return"				{ return RET; }
-"if"				{return IF;}
-"else"				{return ELSE;}
-"while"				{return WHILE;}
+"class"					{ printf("CLASS "); return Q_CLASS; }
+"return"				{ printf("RETN ");  return RET; }
+"if"				{printf("IF "); return IF;}
+"else"				{printf("ELSE "); return ELSE;}
+"while"				{printf("WHILE "); return WHILE;}
 
 "private"				{ return PRIVATE; }
 "public"				{ return PUBLIC;  }

@@ -1,5 +1,5 @@
 dwecc: lexical.cpp parser.h 
-	g++ -std=c++11 lexical.cpp parser.cpp parser.h -o dwecc 
+	g++ -std=c++11 -O2 lexical.cpp parser.cpp parser.h -o dwecc 
 	rm -f lexical.cpp parser.cpp parser.h
 
 lexical.cpp: dwecpp_lex.l
