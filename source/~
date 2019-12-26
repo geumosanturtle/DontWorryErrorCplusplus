@@ -4,7 +4,6 @@
 	#include <cstdint>
 	#include <cstdio>
 	#include <vector>
-	#include <algorithm>
 	#include "symtable.h"
 	using namespace std;	
 	int yyerror(const char *);
@@ -14,8 +13,6 @@
 	symboltable *global = new symboltable;
 	symboltable *current_scope = global;
 	vector<short> scopeidx;
-    vector<_type> tmp;
-
 %}
 %union{
 	char* sval;
@@ -23,7 +20,7 @@
 	short tval;
 	class symboltable *symval;
 	class symbol_table_entry *steval;
-	class _type *tcval;
+    class vector<class _type>  *tvecval;	
 }
 %type <symval> Function 
 %type <symval> Class
@@ -33,7 +30,7 @@
 %type <strval> DeclList 
 %type <sval> ClassName
 %type <tval> Type 
-%type <tcval> FormalList
+
 %token <ival> INTEGER <sval> STRING 
 %token <sval> ID 
 %token COUT ENDL CIN
@@ -96,12 +93,8 @@ Decl		  : Type ID
 Function	  : Type ID LPAR FormalList RPAR LBR StatementList RBR	
 		 		{ $$ = new symboltable;
 				  symboltable* p = $$;
-				  size_t _argc = tmp.size();
-				  for (size_t i = 0; i< _argc; i++){
-					$4[i] = tmp[i];
-				  }
-				  _function ft($1, _argc, $4); 
-				  global->insert($2,ft._typename().c_str(), "global",lineno);
+				  //_function ft($1, $2); 
+				  global->insert($2,"function", "global",lineno);
 				  current_scope = p;
 				  cout << " :  Detected... at " << lineno << "and Included at Symbol table." << endl;
 				  current_scope = global;  
@@ -110,22 +103,11 @@ Function	  : Type ID LPAR FormalList RPAR LBR StatementList RBR
 
 
 /* Argument and Mutiple Variables */
-FormalList 		: Type ID FormalRest 
-			 	  {
-					 _type t($1);
-					 tmp.push_back(t);
-					 current_scope->insert($2,t._typename().c_str(), "local", lineno);
-					 $$ = new _type[tmp.size()];
-				  }
-			 	| 
+FormalList 		: Type ID FormalRest
+			 	|
 				;
 
 FormalRest		: COMMA Type ID FormalRest
-				  {
-					 _type t($2);
-					tmp.push_back(t);
-					current_scope->insert($3,t._typename().c_str(), "local", lineno);
-				  } 
 				|
 				;
 

@@ -3,10 +3,11 @@
    #include <cstdio>
    #include <cstdlib>
    #include <string>
+   #include <cstring>
    #include "parser.h"
 
    using namespace std;
-
+   int lineno = 1;
    extern "C" int yywrap();
    const string str_itoa(const int32_t x){
 		char *s = new char[11];
@@ -19,23 +20,23 @@ StringInput	([^";:])|(\\.)
 Integer		[0-9]+
 Identifier	[A-Za-z_][A-Za-z0-9_]*
 Whitespace  [\t\f\v ]+
-Newline		[\n\r]+
+Newline		[\n\r]
 %%
-Newline		{;}
+Newline		{lineno++;}
 Whitespace	{;}
 
 Integer		{ yylval.ival = atoi(yytext); printf("INT(%s)",yytext); return INTEGER;}
 
-"\""{StringInput}*"\"" { printf("STRING_VALUE(%s)", yytext); return STRING; }
+"\""{StringInput}*"\"" { printf("STRING_VALUE(%s)", yytext); yylval.sval = new char[strlen(yytext)+1]; strcpy(yylval.sval, yytext); yylval.sval[strlen(yytext)] = 0; return STRING; }
 
 
-"int"				 	{printf("INT "); return Int;} 
-"string"				{printf("STR "); return String;}
-"intarr"				{printf("INTARR "); return Intarr;}
-"stringarr"				{printf("STRARR "); return Stringarr; }
-"intlist"				{printf("INTLIST "); return Intlist; }
-"strlist"				{printf("STRLIST "); return Stringlist; }
-"void"					{printf("VOID");	return Void;}
+"int"				 	{printf("INT "); yylval.tval = Int; return Int;} 
+"string"				{printf("STR "); yylval.tval = String; return String;}
+"intarr"				{printf("INTARR "); yylval.tval = Intarr; return Intarr;}
+"stringarr"				{printf("STRARR "); yylval.tval = Stringarr; return Stringarr; }
+"intlist"				{printf("INTLIST "); yylval.tval = Intlist; return Intlist; }
+"strlist"				{printf("STRLIST "); yylval.tval = Stringlist; return Stringlist; }
+"void"					{printf("VOID"); yylval.tval = Void; return Void;}
 
 
 "class"					{ printf("CLASS "); return Q_CLASS; }
@@ -88,12 +89,8 @@ Integer		{ yylval.ival = atoi(yytext); printf("INT(%s)",yytext); return INTEGER;
 ";"   {return SEMICOLON;}
 ":"	  { return COLON;}
 "."	{return DOT;}
-{Identifier}  { printf("ID(%s)", yytext); return ID; }
+{Identifier}  { printf("ID(%s)", yytext); yylval.sval = new char[strlen(yytext)+1](); strcpy(yylval.sval, yytext); return ID; }
 
 %%
 int yywrap() {return 1;}
-//int main(){
-//   yylex();
-//   return 0;
-//}
 

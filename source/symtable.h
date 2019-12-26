@@ -4,7 +4,65 @@
 #include <cstdint>
 #include <iostream>
 #include <string>
+#include <map>
+#include <algorithm>
+#include "parser.h"
 using namespace std;
+
+class _type {
+	protected:
+		short T1;
+		short A;
+	public:
+	_type( const short _T1=Int, const short _A = PUBLIC ):T1(_T1),A(_A){}
+	const bool operator==(_type &T) {
+		return this->T1 == T.T1;
+	}
+	const string _typename() {
+		string s;
+		string a;
+		switch(A) {
+			case PRIVATE : a = string("private"); break;
+			case PUBLIC: a = string("public"); break;
+			default : cout << "Qulifier is INVALID!!" << endl;
+			}
+		switch (T1){
+			case Int: s = string ("int"); break;
+			case String : s = string("string"); break;
+			case Intarr : s = string("intarr"); break;
+			case Stringarr : s = string("stringarr"); break;
+			case Intlist : s = string("intlist"); break;
+			case Stringlist: s = string("stringlist"); break;
+			default : cout << "Semantic Error! : Type is INVALID!!!" << endl;
+		}
+		return (a + " " + s);
+	}
+};
+
+class _function : public _type {
+	private:
+		short argc = 0;
+		_type *arg_tv = nullptr;
+	public:
+		_function( const short returntype, short argumentcount, _type *argt):_type(returntype){
+			if (!argt) {
+				argc = argumentcount;
+				arg_tv = argt;
+			}
+		}
+		const string _typename(){
+			string result = _type::_typename();
+			result += "(";
+			for (size_t i = 0; i< argc ; i++){
+				result += arg_tv[i]._typename();
+				if (i < argc-1) result += ",";
+			}
+			result += ")";
+			return result;
+		}
+	};
+
+				
 
 
 class symbol_table_entry {
@@ -56,6 +114,7 @@ class symboltable {
 			string id = string(_identifier);
 			size_t index = hashfunc(id);
 			steptr new_entry = new symbol_table_entry(_identifier, _type, _scope, lineno, nullptr);
+			cout << "[ Entry ] " << _identifier << ' ' << _type << ' ' << _scope << ' ' << lineno <<endl; 
 			if (symlist[index] == nullptr){
 				symlist[index] = new_entry;
 				cout << "[+]" << id << " inserted";
