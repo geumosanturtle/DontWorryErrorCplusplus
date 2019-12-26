@@ -4,6 +4,8 @@ class yallacha {
  		intarr y;
 	public:
 		void print(){
+			x = 6;
+			if(x!=4){x=0;}
 			cout << x << endl;
 			cout << y << endl;
 		}
