@@ -33,6 +33,7 @@ class _type {
 			case Stringarr : s = string("stringarr"); break;
 			case Intlist : s = string("intlist"); break;
 			case Stringlist: s = string("stringlist"); break;
+			case Void	: s = string("void"); break;
 			default : cout << "Semantic Error! : Type is INVALID!!!" << endl;
 		}
 		return (a + " " + s);
@@ -44,7 +45,7 @@ class _function : public _type {
 		short argc = 0;
 		_type *arg_tv = nullptr;
 	public:
-		_function( const short returntype, short argumentcount, _type *argt):_type(returntype){
+		_function( const short acc = PUBLIC, const short returntype = Void, short argumentcount = 0, _type *argt = nullptr):_type(returntype, acc){
 			if (!argt) {
 				argc = argumentcount;
 				arg_tv = argt;
@@ -53,9 +54,12 @@ class _function : public _type {
 		const string _typename(){
 			string result = _type::_typename();
 			result += "(";
-			for (size_t i = 0; i< argc ; i++){
-				result += arg_tv[i]._typename();
-				if (i < argc-1) result += ",";
+			if (argc == 0) result += "void";
+			else {
+				for (size_t i = 0; i< argc ; i++){
+					result += arg_tv[i]._typename();
+					if (i < argc-1) result += ",";
+					}
 			}
 			result += ")";
 			return result;

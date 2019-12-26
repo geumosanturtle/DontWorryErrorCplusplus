@@ -15,6 +15,7 @@
 	symboltable *current_scope = global;
 	vector<short> scopeidx;
     vector<_type> tmp;
+	bool is_private;
 
 %}
 %union{
@@ -47,7 +48,7 @@
 %token PRIVATE PUBLIC RET COLON
 %token THIS
 %token TRUE 
-%token <sval> Void 
+%token <tval> Void 
 %token WHILE
 %token LBR RBR 
 %token LPAR RPAR
@@ -82,7 +83,9 @@ DeclList      : DeclStatement DeclList
 			  ;
 
 Decl		  : Type ID 
-				{ 	_type t($1);
+				{ 	_type t;
+					if (is_private) t = _type($1,PRIVATE); 
+					else t = _type($1);
 					const char * scopename = nullptr;
 					if (current_scope != global) scopename = "local";
 					else scopename = "global";
@@ -95,16 +98,21 @@ Decl		  : Type ID
 
 Function	  : Type ID LPAR FormalList RPAR LBR StatementList RBR	
 		 		{ $$ = new symboltable;
-				  symboltable* p = $$;
+				  symboltable* p = $$, *s_tmp = current_scope;
 				  size_t _argc = tmp.size();
 				  for (size_t i = 0; i< _argc; i++){
 					$4[i] = tmp[i];
 				  }
-				  _function ft($1, _argc, $4); 
-				  global->insert($2,ft._typename().c_str(), "global",lineno);
+				  _function ft;
+				  if(is_private ) ft = _function(PRIVATE, $1, _argc, $4); 
+				  else ft = _function(PUBLIC,$1, _argc, $4); 
+				  const char * scopename = nullptr;
+				  if (current_scope != global) scopename = "local";
+				  else scopename = "global";
+				  current_scope->insert($2,ft._typename().c_str(), scopename,lineno);
 				  current_scope = p;
 				  cout << " :  Detected... at " << lineno << "and Included at Symbol table." << endl;
-				  current_scope = global;  
+				  current_scope = s_tmp;  
 				}
 			  ;
 
@@ -137,14 +145,14 @@ Type		  : Int 	{$$ = $1;}
 			  | Intlist {$$ = $1;}
 			  | Stringlist  {$$ = $1;}
 			  | ClassName {$$= 0;}
-			  | Void {$$=-1;}
+			  | Void {$$=$1;}
 			  ;
 
 Class		  : Q_CLASS ClassName LBR ClassElementList RBR  
 		 		{ $$ = new symboltable;
 				  symboltable* p = $$; 
-				  global->insert($2,"class", "global",lineno);
 				  current_scope = p;
+				  global->insert($2,"class", "global",lineno);
 				  cout << " :  Detected... at " << lineno << "and Included at Symbol table." << endl; 
 				  sym_tbl.push_back(p);
 				  current_scope = global; 
@@ -155,8 +163,8 @@ ClassName	  : ID  {$$ = $1; cout << $1 << endl;}
 			
 			  ;
 
-ACCESS		  : PRIVATE 
-		  	  | PUBLIC 
+ACCESS		  : PRIVATE  { is_private = true; } 
+		  	  | PUBLIC  {is_private = false; }
 			  ;
 
 /* Field and Method Elements */
