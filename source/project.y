@@ -1,6 +1,6 @@
 %{
 	#include <iostream>
-	#include <ctype>
+	//#include <ctype>
 	#include <cstdio>
 	int yyerror(const char *);
 	int yylex();
@@ -11,30 +11,19 @@
 }
 %token <ival> INTEGER
 %token <sval> STRING
+%token SIZE THIS
 %token ID
 %token BOOL
 %token Q_CLASS
-%token PRIVATE 
-%token PUBLIC
-%token Int
-%token String
-%token Intarr
-%token Stringarr
-%token Intlist
-%token Stringlist
-%token LBR 
-%token RBR
-%token LOAND, LOOR, LONOT
-%token LESS, FRATE, LEQ, GEQ, ASSIGN, EQUAL
-%token PLUS, MINUS, TIMES, MOD, DIV
-%token INJECT, EXTRACT
-%left "<<" ">>"
-%left '<'
-%left '+' '-'
-%left '*' '/' '%'
-%left '(' ')'
-%left '{' '}'
-%right UMINUS UPLUSE
+%token PRIVATE PUBLIC
+%token Int String Intarr Stringarr Intlist Stringlist Void RET
+%token LBR RBR COMMA SEMICOLON COLON
+%token LOAND LOOR LONOT
+%token LESS GREAT LEQ GEQ ASSIGN EQUAL
+%token PLUS MINUS TIMES MOD DIV
+%token INJECT EXTRACT
+%token LPAR RPAR
+%right UMINUS UPLUS
 %%
 Program		:	FunctionList
 		;
@@ -47,11 +36,12 @@ Decl	:	Type ID ';'
 	;
 DeclList	:	Decl DeclList
 	|	Class DeclList
-	|	Func DeclList
+	|	Function DeclList
 	|
 	;
 Function	:	Type ID LPAR FormalList RPAR LBR StatementList RBR
 	;
+ClassDecl 	: Class ';'
 MethodDecl	:	Function MethodDecl
 	|
 	;
@@ -81,16 +71,13 @@ ClassName	:	ID
 ClassStatement	:	Access ':' ClassDecl MethodDecl ClassStatement
 	|
 	;
-ClassDecl	:	Decl ClassDeclList
-	|
-	;
 	
 Exp	:	INTEGER Op
 	|	INTEGER Op1
 	|	BOOL Op1
 	|	LONOT Exp
 	|	ID Op2
-	|	this IDList
+	|	THIS IDList
 	|	ID IDList
 	|	LPAR Exp RPAR
 	|	Sign
@@ -98,7 +85,7 @@ Exp	:	INTEGER Op
 
 IDList	:	'.' ID IDList
 	|	'.' ID LPAR FormalList RPAR
-	|	'.' size LPAR RPAR
+	|	'.' SIZE LPAR RPAR
 	|	',' ID IDList
 	|
 	;
@@ -134,9 +121,9 @@ Op	:	PLUS Exp Op
 Op1	: 	LOAND Exp Op1
 	|	LOOR Exp Op1
 	|	LESS Exp Op1
-	|	GRATE Exp OP1
+	|	GREAT Exp Op1
 	|	GEQ Exp Op1
-	|	LEQ Exp OP1
+	|	LEQ Exp Op1
 	|	EQUAL Exp Op1
 	|
 	;
