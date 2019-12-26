@@ -17,12 +17,19 @@
 %token Q_CLASS
 %token PRIVATE PUBLIC
 %token Int String Intarr Stringarr Intlist Stringlist Void RET
-%token LBR RBR COMMA SEMICOLON COLON ASSIGN
-%token LOAND LOOR LONOT
-%token LESS GREAT LEQ GEQ EQUAL NEQ
-%token PLUS MINUS TIMES MOD DIV PLUSPLUS MINUSMINUS PAS MAS TIMESAS DIVAS MODAS 
+%token SEMICOLON
+%token ASSIGN PAS MAS TIMESAS DIVAS MODAS
+%token COMMA COLON
+%token LOOR
+%token LOAND
+%token EQUAL NEQ
+%token LESS LEQ GREAT GEQ
 %token INJECT EXTRACT
-%token LPAR RPAR
+%token PLUS MINUS
+%token TIMES DIV MOD
+%token LONOT PLUSPLUS MINUSMINUS
+%token DOT
+%token LPAR RPAR LBR RBR
 %right UMINUS UPLUS
 %%
 Program		:	FunctionList
@@ -31,7 +38,7 @@ FunctionList 	:	DeclList MainFunction
 		;
 
 MainFunction	:	Int "main" LPAR Void RPAR LBR StatementList RBR
-Decl	:	Type ID ';'
+Decl	:	Type ID SEMICOLON
 	|
 	;
 DeclList	:	Decl DeclList
@@ -41,14 +48,13 @@ DeclList	:	Decl DeclList
 	;
 Function	:	Type ID LPAR FormalList RPAR LBR StatementList RBR
 	;
-ClassDecl 	: Class ';'
 MethodDecl	:	Function MethodDecl
 	|
 	;
 FormalList	:	Type ID	FormalRest
 		|
 		;
-FormalRest	:	',' Type ID FormalRest
+FormalRest	:	COMMA Type ID FormalRest
 		|
 		;
 
@@ -58,17 +64,20 @@ StatementList	:	Statement StatementList
 Statement	:	Decl ASSIGN LBR ExpList RBR
 	|	"if" LPAR Exp RPAR LBR StatementList RBR
 	|	"while" LPAR Exp RPAR LBR StatementList RBR
-	|	"cout" INJECT ID INJECT "endl" ';'
-	|	"cin" EXTRACT ID ';'
+	|	"cout" INJECT ID INJECT "endl" SEMICOLON
+	|	"cin" EXTRACT ID SEMICOLON
 	|	Exp
 	| 	RET Exp
 	;
 Class	:	Q_CLASS ClassName LBR ClassStatement RBR
 	;
+ClassDecl 	: 
+		|	Decl ClassDecl
+		;
 ClassName	:	ID
 	;
 
-ClassStatement	:	Access ':' ClassDecl MethodDecl ClassStatement
+ClassStatement	:	Access COLON ClassDecl MethodDecl ClassStatement
 	|
 	;
 	
@@ -83,17 +92,18 @@ Exp	:	INTEGER Op
 	|	Sign
 	;
 
-IDList	:	'.' ID IDList
-	|	'.' ID LPAR FormalList RPAR
-	|	'.' SIZE LPAR RPAR
-	|	',' ID IDList
+IDList	:	DOT ID IDList
+	|	DOT ID LPAR FormalList RPAR
+	|	DOT SIZE LPAR RPAR
+	|	COMMA ID IDList
 	|
 	;
-Sign	:	'-' INTEGER	{}	%prec UMINUS
-	|	'+' INTEGER	{}	%prec UPLUS
+Sign	:	MINUS INTEGER	{}	%prec UMINUS
+	|	PLUS INTEGER	{}	%prec UPLUS
 	;
-Access	:	PRIVATE | PUBLIC
-	|
+Access	:	
+	| 	PUBLIC
+	|	PRIVATE
 	;
 Type	:	Int
 	|	String
@@ -107,7 +117,7 @@ Type	:	Int
 ExpList	:	Exp ExpRest
 	;
 
-ExpRest	:	',' Exp ExpRest
+ExpRest	:	COMMA Exp ExpRest
 	|
 	;
 
@@ -133,6 +143,5 @@ Op2	:	ASSIGN Exp
 %%
 int main() { yyparse(); return 0;}
 int yyerror(const char *msg){ fputs(msg,stdout);}
-
 
 

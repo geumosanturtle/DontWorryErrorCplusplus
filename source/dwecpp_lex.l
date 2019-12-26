@@ -83,7 +83,7 @@ Integer		{ printf("INT(%s)",yytext); }
 ","   {	return COMMA; }
 ";"   {return SEMICOLON;}
 ":"	  { return COLON;}
-
+"."	{return DOT;}
 {Identifier}  { printf("ID(%s)", yytext); return ID; }
 
 %%
