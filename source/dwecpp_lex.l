@@ -1,9 +1,18 @@
 %{
    
-   #include <stdio.h>
-   #include <stdlib.h>
-   #include "y.tab.h"
+   #include <cstdio>
+   #include <cstdlib>
+   #include <string>
+   #include "parser.h"
+
+   using namespace std;
+
    extern "C" int yywrap();
+   const string str_itoa(const int32_t x){
+		char *s = new char[11];
+		sprintf(s, "%d", x);
+		return string(s);
+	}
 %}
 
 StringInput	([^"])|(\\.)
