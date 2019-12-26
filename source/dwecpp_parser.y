@@ -9,7 +9,7 @@
 	char* sval;
 	int ival;
 }
-%token <ival> INTEGER <sval> STRING ID
+%token <ival> INTEGER <sval> STRING ID COUT ENDL CIN
 %token SEMICOLON COMMA
 %token COLONCOLON DOT ASSIGN PAS MAS TIMESAS DIVAS MODAS SIZE
 %token PLUS MINUS DIV MOD TIMES INJECT EXTRACT EQUAL NEQ LEQ GEQ LESS GREAT LOAND LOOR LONOT
@@ -24,38 +24,52 @@
 %token LBR RBR 
 %token LPAR RPAR
 
-%right UMINUS UPLUS
-%%
-Program		:  FunctionList MainFunction
-		;
-FunctionList 	:	DeclList 
-			  |
-		;
+%nonassoc NONE_ELSE_IF
 
-MainFunction	:	Int "main" LPAR Void RPAR LBR StatementList RBR
+%right UMINUS UPLUS
+%start Program
+/*
+%%
+Program		 :	FunctionList MainFunction
+			 ;
+
+FunctionList :	DeclList 
+			 ;
+
+MainFunction :	Int "main" LPAR Void RPAR LBR StatementList RBR
+
 Decl	:	Type ID SEMICOLON
-	;
+	 	|	Class SEMICOLON
+		|	Function
+	 	;
 
 DeclList	:	Decl DeclList
-	|	Class DeclList
-	|	Function DeclList
-	|
-	;
+		 	|
+			;
+
 Function	:	Type ID LPAR FormalList RPAR LBR StatementList RBR
-	;
+			|	Method_External
+			;
+
+Method_External : Type ClassName COLONCOLON ID LPAR FormalList RPAR LBR StatementList RBR
+				;
+
 MethodDecl	:	Function MethodDecl
-	|
-	;
-FormalList	:	Type ID FormalRest
-		|
-		;
+			|
+			;
+
+FormalList	:	
+		    | 	Type ID FormalRest
+			;
+
 FormalRest	:	COMMA Type ID FormalRest	
-		|
-		;
+			|
+			;
 
 StatementList	:	Statement StatementList
-	|	{printf("asd");}
-	;
+				|	{printf("asd");}
+				;
+
 Statement	:	Decl
 	|	IF LPAR Exp RPAR LBR StatementList RBR
 	|	WHILE LPAR Exp RPAR LBR StatementList RBR
@@ -64,7 +78,7 @@ Statement	:	Decl
 	|	Exp SEMICOLON
 	| 	RET Exp SEMICOLON
 	;
-Class	:	Q_CLASS ClassName LBR ClassStatement RBR
+ Class	:	Q_CLASS ClassName LBR ClassStatement RBR
 	;
 ClassDecl 	: 
 		|	Decl ClassDecl 
@@ -132,6 +146,106 @@ Op1	: 	LOAND Exp
 Op2	:	ASSIGN Exp
 	;
 
+*/
+
+%%
+
+Program : ProcedureList
+		 ;
+
+ProcedureList : DeclList
+			  ;
+
+DeclList      : DeclStatement DeclList
+			  | Function DeclList
+			  |
+			  ;
+
+Decl		  : Type ID
+			  | Class
+			  ;
+/* Function and External Definition of Methods for Classes */
+
+Function	  : Type ID LPAR FormalList RPAR LBR StatementList RBR
+		   	  | External_Method
+			  ;
+
+External_Method : Type ClassName COLONCOLON ID ID LPAR FormalList RPAR LBR StatementList RBR
+			    ;
+
+/* Argument and Mutiple Variables */
+FormalList 		: Type ID FormalRest
+			 	|
+				;
+
+FormalRest		: COMMA Type ID FormalRest
+				|
+				;
+
+/* Type Elements */
+Type		  : Int 
+	  		  | String 
+			  | Intarr 
+		  	  | Stringarr 
+			  | Intlist 
+			  | Stringlist 
+			  | ClassName
+			  | Void
+			  ;
+
+Class		  : Q_CLASS ClassName LBR ClassElementList RBR
+		 	  ;
+
+ClassName	  : ID
+			  ;
+
+ACCESS		  : PRIVATE 
+		  	  | PUBLIC 
+			  ;
+
+/* Field and Method Elements */
+ClassElement  : ACCESS COLON DeclList
+			  ;
+
+ClassElementList : ClassElement ClassElementList
+				 |
+				 ;
+
+/* Statemant */
+
+StatementList : Statement StatementList 
+			  |
+			  ;
+
+Statement	  : DeclStatement
+			  | Exp SEMICOLON
+			  | IF LPAR Exp RPAR LBR StatementList RBR %prec NONE_ELSE_IF
+			  | IF LPAR Exp RPAR LBR StatementList RBR ELSE LBR StatementList RBR 
+		 	  | WHILE LPAR Exp RPAR LBR StatementList RBR
+		  	  |	COUT INJECT Exp INJECT ENDL SEMICOLON
+			  |	CIN EXTRACT Exp SEMICOLON
+			  | RET Exp SEMICOLON
+			  | ClassName DOT ID LPAR Exp RPAR SEMICOLON
+			  ;
+
+DeclStatement : Decl SEMICOLON 
+			  ;
+
+/* Evaluate Expression */
+/*
+Operators	  : Arithmetics
+			  | Assignments
+			  | Logical
+			  ;
+Arithmetics   : PLUS | MINUS | TIMES | DIV | MOD;
+Assignments	  : PLUSPLUS | MINUSMINUS | PAS | MAS | TIMESAS | DIVAS | MODAS;
+Logical		  : NEQ | EQUAL | GREAT | LESS | GEQ | LEQ | LOAND | LOOR | LONOT; 
+*/
+Exp			  : INTEGER 
+			  | STRING
+			  | ID
+			  |
+			  ;
 
 %%
 int main() { yyparse(); return 0;}

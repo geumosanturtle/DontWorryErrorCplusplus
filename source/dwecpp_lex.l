@@ -46,7 +46,9 @@ Integer		{ yylval.ival = atoi(yytext); printf("INT(%s)",yytext); return INTEGER;
 
 "private"				{ return PRIVATE; }
 "public"				{ return PUBLIC;  }
-
+"cout" {return COUT;}
+"cin" {return CIN;}
+"endl" {return ENDL;}
 
 "&&"   { return LOAND;}
 "||"   { return LOOR; }
