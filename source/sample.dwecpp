@@ -1,0 +1,18 @@
+class yallacha {
+	private:
+		int x;
+ 		intarr y;
+	public:
+		void print(){
+			x = 6;
+			if (x !=9 ) { x = 0; }
+			cout << x << endl;
+			cout << y << endl;	
+		}
+};
+
+int main(){
+	yallacha y;
+	y.print();
+	return 0;
+}

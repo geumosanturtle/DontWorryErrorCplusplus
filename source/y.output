@@ -1,0 +1,2716 @@
+Terminals unused in grammar
+
+   SIZE
+   PLUSPLUS
+   MINUSMINUS
+   BOOL
+   THIS
+   UPLUS
+
+
+문법
+
+    0 $accept: Program $end
+
+    1 Program: ProcedureList
+
+    2 ProcedureList: DeclList
+
+    3 DeclList: DeclStatement DeclList
+    4         | Function DeclList
+    5         | %empty
+
+    6 Decl: Type ID
+    7     | Class
+
+    8 Function: Type ID LPAR FormalList RPAR LBR StatementList RBR
+
+    9 FormalList: Type ID FormalRest
+   10           | %empty
+
+   11 FormalRest: COMMA Type ID FormalRest
+   12           | %empty
+
+   13 Type: Int
+   14     | String
+   15     | Intarr
+   16     | Stringarr
+   17     | Intlist
+   18     | Stringlist
+   19     | ClassName
+   20     | Void
+
+   21 Class: Q_CLASS ClassName LBR ClassElementList RBR
+
+   22 ClassName: ID
+
+   23 ACCESS: PRIVATE
+   24       | PUBLIC
+
+   25 ClassElement: ACCESS COLON DeclList
+
+   26 ClassElementList: ClassElement ClassElementList
+   27                 | %empty
+
+   28 StatementList: Statement StatementList
+   29              | %empty
+
+   30 Statement: DeclStatement
+   31          | Exp SEMICOLON
+   32          | IF LPAR Exp RPAR LBR StatementList RBR
+   33          | IF LPAR Exp RPAR LBR StatementList RBR ELSE LBR StatementList RBR
+   34          | WHILE LPAR Exp RPAR LBR StatementList RBR
+   35          | COUT INJECT Exp INJECT ENDL SEMICOLON
+   36          | CIN EXTRACT Exp SEMICOLON
+   37          | RET Exp SEMICOLON
+   38          | ClassName DOT ID LPAR Exp RPAR SEMICOLON
+   39          | SEMICOLON
+
+   40 DeclStatement: Decl SEMICOLON
+
+   41 BOOLEAN: TRUE
+   42        | FALSE
+
+   43 Exp: LPAR Exp RPAR
+   44    | BOOLEAN
+   45    | INTEGER
+   46    | STRING
+   47    | ID
+   48    | Exp PLUS Exp
+   49    | Exp MINUS Exp
+   50    | Exp TIMES Exp
+   51    | Exp DIV Exp
+   52    | Exp MOD Exp
+   53    | Exp EQUAL Exp
+   54    | Exp NEQ Exp
+   55    | Exp LESS Exp
+   56    | Exp GREAT Exp
+   57    | Exp LEQ Exp
+   58    | Exp GEQ Exp
+   59    | Exp LOAND Exp
+   60    | Exp LOOR Exp
+   61    | LONOT Exp
+   62    | MINUS Exp
+   63    | Exp PAS Exp
+   64    | Exp MAS Exp
+   65    | Exp TIMESAS Exp
+   66    | Exp DIVAS Exp
+   67    | Exp MODAS Exp
+   68    | Exp ASSIGN Exp
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+INTEGER (258) 45
+STRING (259) 46
+ID (260) 6 8 9 11 22 38 47
+COUT (261) 35
+ENDL (262) 35
+CIN (263) 36
+SEMICOLON (264) 31 35 36 37 38 39 40
+COMMA (265) 11
+DOT (266) 38
+ASSIGN (267) 68
+PAS (268) 63
+MAS (269) 64
+TIMESAS (270) 65
+DIVAS (271) 66
+MODAS (272) 67
+SIZE (273)
+PLUS (274) 48
+MINUS (275) 49 62
+DIV (276) 51
+MOD (277) 52
+TIMES (278) 50
+INJECT (279) 35
+EXTRACT (280) 36
+EQUAL (281) 53
+NEQ (282) 54
+LEQ (283) 57
+GEQ (284) 58
+LESS (285) 55
+GREAT (286) 56
+LOAND (287) 59
+LOOR (288) 60
+LONOT (289) 61
+PLUSPLUS (290)
+MINUSMINUS (291)
+BOOL (292)
+Q_CLASS (293) 21
+ELSE (294) 33
+FALSE (295) 42
+Int (296) 13
+String (297) 14
+Intarr (298) 15
+Stringarr (299) 16
+Intlist (300) 17
+Stringlist (301) 18
+IF (302) 32 33
+PRIVATE (303) 23
+PUBLIC (304) 24
+RET (305) 37
+COLON (306) 25
+THIS (307)
+TRUE (308) 41
+Void (309) 20
+WHILE (310) 34
+LBR (311) 8 21 32 33 34
+RBR (312) 8 21 32 33 34
+LPAR (313) 8 32 33 34 38 43
+RPAR (314) 8 32 33 34 38 43
+NONE_ELSE_IF (315)
+UMINUS (316)
+UPLUS (317)
+
+
+Nonterminals, with rules where they appear
+
+$accept (63)
+    on left: 0
+Program (64)
+    on left: 1, on right: 0
+ProcedureList (65)
+    on left: 2, on right: 1
+DeclList (66)
+    on left: 3 4 5, on right: 2 3 4 25
+Decl (67)
+    on left: 6 7, on right: 40
+Function (68)
+    on left: 8, on right: 4
+FormalList (69)
+    on left: 9 10, on right: 8
+FormalRest (70)
+    on left: 11 12, on right: 9 11
+Type (71)
+    on left: 13 14 15 16 17 18 19 20, on right: 6 8 9 11
+Class (72)
+    on left: 21, on right: 7
+ClassName (73)
+    on left: 22, on right: 19 21 38
+ACCESS (74)
+    on left: 23 24, on right: 25
+ClassElement (75)
+    on left: 25, on right: 26
+ClassElementList (76)
+    on left: 26 27, on right: 21 26
+StatementList (77)
+    on left: 28 29, on right: 8 28 32 33 34
+Statement (78)
+    on left: 30 31 32 33 34 35 36 37 38 39, on right: 28
+DeclStatement (79)
+    on left: 40, on right: 3 30
+BOOLEAN (80)
+    on left: 41 42, on right: 44
+Exp (81)
+    on left: 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60
+    61 62 63 64 65 66 67 68, on right: 31 32 33 34 35 36 37 38 43 48
+    49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68
+
+
+State 0
+
+    0 $accept: . Program $end
+
+    ID          shift, and go to state 1
+    Q_CLASS     shift, and go to state 2
+    Int         shift, and go to state 3
+    String      shift, and go to state 4
+    Intarr      shift, and go to state 5
+    Stringarr   shift, and go to state 6
+    Intlist     shift, and go to state 7
+    Stringlist  shift, and go to state 8
+    Void        shift, and go to state 9
+
+    $default  reduce using rule 5 (DeclList)
+
+    Program        go to state 10
+    ProcedureList  go to state 11
+    DeclList       go to state 12
+    Decl           go to state 13
+    Function       go to state 14
+    Type           go to state 15
+    Class          go to state 16
+    ClassName      go to state 17
+    DeclStatement  go to state 18
+
+
+State 1
+
+   22 ClassName: ID .
+
+    $default  reduce using rule 22 (ClassName)
+
+
+State 2
+
+   21 Class: Q_CLASS . ClassName LBR ClassElementList RBR
+
+    ID  shift, and go to state 1
+
+    ClassName  go to state 19
+
+
+State 3
+
+   13 Type: Int .
+
+    $default  reduce using rule 13 (Type)
+
+
+State 4
+
+   14 Type: String .
+
+    $default  reduce using rule 14 (Type)
+
+
+State 5
+
+   15 Type: Intarr .
+
+    $default  reduce using rule 15 (Type)
+
+
+State 6
+
+   16 Type: Stringarr .
+
+    $default  reduce using rule 16 (Type)
+
+
+State 7
+
+   17 Type: Intlist .
+
+    $default  reduce using rule 17 (Type)
+
+
+State 8
+
+   18 Type: Stringlist .
+
+    $default  reduce using rule 18 (Type)
+
+
+State 9
+
+   20 Type: Void .
+
+    $default  reduce using rule 20 (Type)
+
+
+State 10
+
+    0 $accept: Program . $end
+
+    $end  shift, and go to state 20
+
+
+State 11
+
+    1 Program: ProcedureList .
+
+    $default  reduce using rule 1 (Program)
+
+
+State 12
+
+    2 ProcedureList: DeclList .
+
+    $default  reduce using rule 2 (ProcedureList)
+
+
+State 13
+
+   40 DeclStatement: Decl . SEMICOLON
+
+    SEMICOLON  shift, and go to state 21
+
+
+State 14
+
+    4 DeclList: Function . DeclList
+
+    ID          shift, and go to state 1
+    Q_CLASS     shift, and go to state 2
+    Int         shift, and go to state 3
+    String      shift, and go to state 4
+    Intarr      shift, and go to state 5
+    Stringarr   shift, and go to state 6
+    Intlist     shift, and go to state 7
+    Stringlist  shift, and go to state 8
+    Void        shift, and go to state 9
+
+    $default  reduce using rule 5 (DeclList)
+
+    DeclList       go to state 22
+    Decl           go to state 13
+    Function       go to state 14
+    Type           go to state 15
+    Class          go to state 16
+    ClassName      go to state 17
+    DeclStatement  go to state 18
+
+
+State 15
+
+    6 Decl: Type . ID
+    8 Function: Type . ID LPAR FormalList RPAR LBR StatementList RBR
+
+    ID  shift, and go to state 23
+
+
+State 16
+
+    7 Decl: Class .
+
+    $default  reduce using rule 7 (Decl)
+
+
+State 17
+
+   19 Type: ClassName .
+
+    $default  reduce using rule 19 (Type)
+
+
+State 18
+
+    3 DeclList: DeclStatement . DeclList
+
+    ID          shift, and go to state 1
+    Q_CLASS     shift, and go to state 2
+    Int         shift, and go to state 3
+    String      shift, and go to state 4
+    Intarr      shift, and go to state 5
+    Stringarr   shift, and go to state 6
+    Intlist     shift, and go to state 7
+    Stringlist  shift, and go to state 8
+    Void        shift, and go to state 9
+
+    $default  reduce using rule 5 (DeclList)
+
+    DeclList       go to state 24
+    Decl           go to state 13
+    Function       go to state 14
+    Type           go to state 15
+    Class          go to state 16
+    ClassName      go to state 17
+    DeclStatement  go to state 18
+
+
+State 19
+
+   21 Class: Q_CLASS ClassName . LBR ClassElementList RBR
+
+    LBR  shift, and go to state 25
+
+
+State 20
+
+    0 $accept: Program $end .
+
+    $default  accept
+
+
+State 21
+
+   40 DeclStatement: Decl SEMICOLON .
+
+    $default  reduce using rule 40 (DeclStatement)
+
+
+State 22
+
+    4 DeclList: Function DeclList .
+
+    $default  reduce using rule 4 (DeclList)
+
+
+State 23
+
+    6 Decl: Type ID .
+    8 Function: Type ID . LPAR FormalList RPAR LBR StatementList RBR
+
+    LPAR  shift, and go to state 26
+
+    $default  reduce using rule 6 (Decl)
+
+
+State 24
+
+    3 DeclList: DeclStatement DeclList .
+
+    $default  reduce using rule 3 (DeclList)
+
+
+State 25
+
+   21 Class: Q_CLASS ClassName LBR . ClassElementList RBR
+
+    PRIVATE  shift, and go to state 27
+    PUBLIC   shift, and go to state 28
+
+    $default  reduce using rule 27 (ClassElementList)
+
+    ACCESS            go to state 29
+    ClassElement      go to state 30
+    ClassElementList  go to state 31
+
+
+State 26
+
+    8 Function: Type ID LPAR . FormalList RPAR LBR StatementList RBR
+
+    ID          shift, and go to state 1
+    Int         shift, and go to state 3
+    String      shift, and go to state 4
+    Intarr      shift, and go to state 5
+    Stringarr   shift, and go to state 6
+    Intlist     shift, and go to state 7
+    Stringlist  shift, and go to state 8
+    Void        shift, and go to state 9
+
+    $default  reduce using rule 10 (FormalList)
+
+    FormalList  go to state 32
+    Type        go to state 33
+    ClassName   go to state 17
+
+
+State 27
+
+   23 ACCESS: PRIVATE .
+
+    $default  reduce using rule 23 (ACCESS)
+
+
+State 28
+
+   24 ACCESS: PUBLIC .
+
+    $default  reduce using rule 24 (ACCESS)
+
+
+State 29
+
+   25 ClassElement: ACCESS . COLON DeclList
+
+    COLON  shift, and go to state 34
+
+
+State 30
+
+   26 ClassElementList: ClassElement . ClassElementList
+
+    PRIVATE  shift, and go to state 27
+    PUBLIC   shift, and go to state 28
+
+    $default  reduce using rule 27 (ClassElementList)
+
+    ACCESS            go to state 29
+    ClassElement      go to state 30
+    ClassElementList  go to state 35
+
+
+State 31
+
+   21 Class: Q_CLASS ClassName LBR ClassElementList . RBR
+
+    RBR  shift, and go to state 36
+
+
+State 32
+
+    8 Function: Type ID LPAR FormalList . RPAR LBR StatementList RBR
+
+    RPAR  shift, and go to state 37
+
+
+State 33
+
+    9 FormalList: Type . ID FormalRest
+
+    ID  shift, and go to state 38
+
+
+State 34
+
+   25 ClassElement: ACCESS COLON . DeclList
+
+    ID          shift, and go to state 1
+    Q_CLASS     shift, and go to state 2
+    Int         shift, and go to state 3
+    String      shift, and go to state 4
+    Intarr      shift, and go to state 5
+    Stringarr   shift, and go to state 6
+    Intlist     shift, and go to state 7
+    Stringlist  shift, and go to state 8
+    Void        shift, and go to state 9
+
+    $default  reduce using rule 5 (DeclList)
+
+    DeclList       go to state 39
+    Decl           go to state 13
+    Function       go to state 14
+    Type           go to state 15
+    Class          go to state 16
+    ClassName      go to state 17
+    DeclStatement  go to state 18
+
+
+State 35
+
+   26 ClassElementList: ClassElement ClassElementList .
+
+    $default  reduce using rule 26 (ClassElementList)
+
+
+State 36
+
+   21 Class: Q_CLASS ClassName LBR ClassElementList RBR .
+
+    $default  reduce using rule 21 (Class)
+
+
+State 37
+
+    8 Function: Type ID LPAR FormalList RPAR . LBR StatementList RBR
+
+    LBR  shift, and go to state 40
+
+
+State 38
+
+    9 FormalList: Type ID . FormalRest
+
+    COMMA  shift, and go to state 41
+
+    $default  reduce using rule 12 (FormalRest)
+
+    FormalRest  go to state 42
+
+
+State 39
+
+   25 ClassElement: ACCESS COLON DeclList .
+
+    $default  reduce using rule 25 (ClassElement)
+
+
+State 40
+
+    8 Function: Type ID LPAR FormalList RPAR LBR . StatementList RBR
+
+    INTEGER     shift, and go to state 43
+    STRING      shift, and go to state 44
+    ID          shift, and go to state 45
+    COUT        shift, and go to state 46
+    CIN         shift, and go to state 47
+    SEMICOLON   shift, and go to state 48
+    MINUS       shift, and go to state 49
+    LONOT       shift, and go to state 50
+    Q_CLASS     shift, and go to state 2
+    FALSE       shift, and go to state 51
+    Int         shift, and go to state 3
+    String      shift, and go to state 4
+    Intarr      shift, and go to state 5
+    Stringarr   shift, and go to state 6
+    Intlist     shift, and go to state 7
+    Stringlist  shift, and go to state 8
+    IF          shift, and go to state 52
+    RET         shift, and go to state 53
+    TRUE        shift, and go to state 54
+    Void        shift, and go to state 9
+    WHILE       shift, and go to state 55
+    LPAR        shift, and go to state 56
+
+    $default  reduce using rule 29 (StatementList)
+
+    Decl           go to state 13
+    Type           go to state 57
+    Class          go to state 16
+    ClassName      go to state 58
+    StatementList  go to state 59
+    Statement      go to state 60
+    DeclStatement  go to state 61
+    BOOLEAN        go to state 62
+    Exp            go to state 63
+
+
+State 41
+
+   11 FormalRest: COMMA . Type ID FormalRest
+
+    ID          shift, and go to state 1
+    Int         shift, and go to state 3
+    String      shift, and go to state 4
+    Intarr      shift, and go to state 5
+    Stringarr   shift, and go to state 6
+    Intlist     shift, and go to state 7
+    Stringlist  shift, and go to state 8
+    Void        shift, and go to state 9
+
+    Type       go to state 64
+    ClassName  go to state 17
+
+
+State 42
+
+    9 FormalList: Type ID FormalRest .
+
+    $default  reduce using rule 9 (FormalList)
+
+
+State 43
+
+   45 Exp: INTEGER .
+
+    $default  reduce using rule 45 (Exp)
+
+
+State 44
+
+   46 Exp: STRING .
+
+    $default  reduce using rule 46 (Exp)
+
+
+State 45
+
+   22 ClassName: ID .
+   47 Exp: ID .
+
+    ID        reduce using rule 22 (ClassName)
+    DOT       reduce using rule 22 (ClassName)
+    $default  reduce using rule 47 (Exp)
+
+
+State 46
+
+   35 Statement: COUT . INJECT Exp INJECT ENDL SEMICOLON
+
+    INJECT  shift, and go to state 65
+
+
+State 47
+
+   36 Statement: CIN . EXTRACT Exp SEMICOLON
+
+    EXTRACT  shift, and go to state 66
+
+
+State 48
+
+   39 Statement: SEMICOLON .
+
+    $default  reduce using rule 39 (Statement)
+
+
+State 49
+
+   62 Exp: MINUS . Exp
+
+    INTEGER  shift, and go to state 43
+    STRING   shift, and go to state 44
+    ID       shift, and go to state 67
+    MINUS    shift, and go to state 49
+    LONOT    shift, and go to state 50
+    FALSE    shift, and go to state 51
+    TRUE     shift, and go to state 54
+    LPAR     shift, and go to state 56
+
+    BOOLEAN  go to state 62
+    Exp      go to state 68
+
+
+State 50
+
+   61 Exp: LONOT . Exp
+
+    INTEGER  shift, and go to state 43
+    STRING   shift, and go to state 44
+    ID       shift, and go to state 67
+    MINUS    shift, and go to state 49
+    LONOT    shift, and go to state 50
+    FALSE    shift, and go to state 51
+    TRUE     shift, and go to state 54
+    LPAR     shift, and go to state 56
+
+    BOOLEAN  go to state 62
+    Exp      go to state 69
+
+
+State 51
+
+   42 BOOLEAN: FALSE .
+
+    $default  reduce using rule 42 (BOOLEAN)
+
+
+State 52
+
+   32 Statement: IF . LPAR Exp RPAR LBR StatementList RBR
+   33          | IF . LPAR Exp RPAR LBR StatementList RBR ELSE LBR StatementList RBR
+
+    LPAR  shift, and go to state 70
+
+
+State 53
+
+   37 Statement: RET . Exp SEMICOLON
+
+    INTEGER  shift, and go to state 43
+    STRING   shift, and go to state 44
+    ID       shift, and go to state 67
+    MINUS    shift, and go to state 49
+    LONOT    shift, and go to state 50
+    FALSE    shift, and go to state 51
+    TRUE     shift, and go to state 54
+    LPAR     shift, and go to state 56
+
+    BOOLEAN  go to state 62
+    Exp      go to state 71
+
+
+State 54
+
+   41 BOOLEAN: TRUE .
+
+    $default  reduce using rule 41 (BOOLEAN)
+
+
+State 55
+
+   34 Statement: WHILE . LPAR Exp RPAR LBR StatementList RBR
+
+    LPAR  shift, and go to state 72
+
+
+State 56
+
+   43 Exp: LPAR . Exp RPAR
+
+    INTEGER  shift, and go to state 43
+    STRING   shift, and go to state 44
+    ID       shift, and go to state 67
+    MINUS    shift, and go to state 49
+    LONOT    shift, and go to state 50
+    FALSE    shift, and go to state 51
+    TRUE     shift, and go to state 54
+    LPAR     shift, and go to state 56
+
+    BOOLEAN  go to state 62
+    Exp      go to state 73
+
+
+State 57
+
+    6 Decl: Type . ID
+
+    ID  shift, and go to state 74
+
+
+State 58
+
+   19 Type: ClassName .
+   38 Statement: ClassName . DOT ID LPAR Exp RPAR SEMICOLON
+
+    DOT  shift, and go to state 75
+
+    $default  reduce using rule 19 (Type)
+
+
+State 59
+
+    8 Function: Type ID LPAR FormalList RPAR LBR StatementList . RBR
+
+    RBR  shift, and go to state 76
+
+
+State 60
+
+   28 StatementList: Statement . StatementList
+
+    INTEGER     shift, and go to state 43
+    STRING      shift, and go to state 44
+    ID          shift, and go to state 45
+    COUT        shift, and go to state 46
+    CIN         shift, and go to state 47
+    SEMICOLON   shift, and go to state 48
+    MINUS       shift, and go to state 49
+    LONOT       shift, and go to state 50
+    Q_CLASS     shift, and go to state 2
+    FALSE       shift, and go to state 51
+    Int         shift, and go to state 3
+    String      shift, and go to state 4
+    Intarr      shift, and go to state 5
+    Stringarr   shift, and go to state 6
+    Intlist     shift, and go to state 7
+    Stringlist  shift, and go to state 8
+    IF          shift, and go to state 52
+    RET         shift, and go to state 53
+    TRUE        shift, and go to state 54
+    Void        shift, and go to state 9
+    WHILE       shift, and go to state 55
+    LPAR        shift, and go to state 56
+
+    $default  reduce using rule 29 (StatementList)
+
+    Decl           go to state 13
+    Type           go to state 57
+    Class          go to state 16
+    ClassName      go to state 58
+    StatementList  go to state 77
+    Statement      go to state 60
+    DeclStatement  go to state 61
+    BOOLEAN        go to state 62
+    Exp            go to state 63
+
+
+State 61
+
+   30 Statement: DeclStatement .
+
+    $default  reduce using rule 30 (Statement)
+
+
+State 62
+
+   44 Exp: BOOLEAN .
+
+    $default  reduce using rule 44 (Exp)
+
+
+State 63
+
+   31 Statement: Exp . SEMICOLON
+   48 Exp: Exp . PLUS Exp
+   49    | Exp . MINUS Exp
+   50    | Exp . TIMES Exp
+   51    | Exp . DIV Exp
+   52    | Exp . MOD Exp
+   53    | Exp . EQUAL Exp
+   54    | Exp . NEQ Exp
+   55    | Exp . LESS Exp
+   56    | Exp . GREAT Exp
+   57    | Exp . LEQ Exp
+   58    | Exp . GEQ Exp
+   59    | Exp . LOAND Exp
+   60    | Exp . LOOR Exp
+   63    | Exp . PAS Exp
+   64    | Exp . MAS Exp
+   65    | Exp . TIMESAS Exp
+   66    | Exp . DIVAS Exp
+   67    | Exp . MODAS Exp
+   68    | Exp . ASSIGN Exp
+
+    SEMICOLON  shift, and go to state 78
+    ASSIGN     shift, and go to state 79
+    PAS        shift, and go to state 80
+    MAS        shift, and go to state 81
+    TIMESAS    shift, and go to state 82
+    DIVAS      shift, and go to state 83
+    MODAS      shift, and go to state 84
+    PLUS       shift, and go to state 85
+    MINUS      shift, and go to state 86
+    DIV        shift, and go to state 87
+    MOD        shift, and go to state 88
+    TIMES      shift, and go to state 89
+    EQUAL      shift, and go to state 90
+    NEQ        shift, and go to state 91
+    LEQ        shift, and go to state 92
+    GEQ        shift, and go to state 93
+    LESS       shift, and go to state 94
+    GREAT      shift, and go to state 95
+    LOAND      shift, and go to state 96
+    LOOR       shift, and go to state 97
+
+
+State 64
+
+   11 FormalRest: COMMA Type . ID FormalRest
+
+    ID  shift, and go to state 98
+
+
+State 65
+
+   35 Statement: COUT INJECT . Exp INJECT ENDL SEMICOLON
+
+    INTEGER  shift, and go to state 43
+    STRING   shift, and go to state 44
+    ID       shift, and go to state 67
+    MINUS    shift, and go to state 49
+    LONOT    shift, and go to state 50
+    FALSE    shift, and go to state 51
+    TRUE     shift, and go to state 54
+    LPAR     shift, and go to state 56
+
+    BOOLEAN  go to state 62
+    Exp      go to state 99
+
+
+State 66
+
+   36 Statement: CIN EXTRACT . Exp SEMICOLON
+
+    INTEGER  shift, and go to state 43
+    STRING   shift, and go to state 44
+    ID       shift, and go to state 67
+    MINUS    shift, and go to state 49
+    LONOT    shift, and go to state 50
+    FALSE    shift, and go to state 51
+    TRUE     shift, and go to state 54
+    LPAR     shift, and go to state 56
+
+    BOOLEAN  go to state 62
+    Exp      go to state 100
+
+
+State 67
+
+   47 Exp: ID .
+
+    $default  reduce using rule 47 (Exp)
+
+
+State 68
+
+   48 Exp: Exp . PLUS Exp
+   49    | Exp . MINUS Exp
+   50    | Exp . TIMES Exp
+   51    | Exp . DIV Exp
+   52    | Exp . MOD Exp
+   53    | Exp . EQUAL Exp
+   54    | Exp . NEQ Exp
+   55    | Exp . LESS Exp
+   56    | Exp . GREAT Exp
+   57    | Exp . LEQ Exp
+   58    | Exp . GEQ Exp
+   59    | Exp . LOAND Exp
+   60    | Exp . LOOR Exp
+   62    | MINUS Exp .
+   63    | Exp . PAS Exp
+   64    | Exp . MAS Exp
+   65    | Exp . TIMESAS Exp
+   66    | Exp . DIVAS Exp
+   67    | Exp . MODAS Exp
+   68    | Exp . ASSIGN Exp
+
+    $default  reduce using rule 62 (Exp)
+
+
+State 69
+
+   48 Exp: Exp . PLUS Exp
+   49    | Exp . MINUS Exp
+   50    | Exp . TIMES Exp
+   51    | Exp . DIV Exp
+   52    | Exp . MOD Exp
+   53    | Exp . EQUAL Exp
+   54    | Exp . NEQ Exp
+   55    | Exp . LESS Exp
+   56    | Exp . GREAT Exp
+   57    | Exp . LEQ Exp
+   58    | Exp . GEQ Exp
+   59    | Exp . LOAND Exp
+   60    | Exp . LOOR Exp
+   61    | LONOT Exp .
+   63    | Exp . PAS Exp
+   64    | Exp . MAS Exp
+   65    | Exp . TIMESAS Exp
+   66    | Exp . DIVAS Exp
+   67    | Exp . MODAS Exp
+   68    | Exp . ASSIGN Exp
+
+    $default  reduce using rule 61 (Exp)
+
+
+State 70
+
+   32 Statement: IF LPAR . Exp RPAR LBR StatementList RBR
+   33          | IF LPAR . Exp RPAR LBR StatementList RBR ELSE LBR StatementList RBR
+
+    INTEGER  shift, and go to state 43
+    STRING   shift, and go to state 44
+    ID       shift, and go to state 67
+    MINUS    shift, and go to state 49
+    LONOT    shift, and go to state 50
+    FALSE    shift, and go to state 51
+    TRUE     shift, and go to state 54
+    LPAR     shift, and go to state 56
+
+    BOOLEAN  go to state 62
+    Exp      go to state 101
+
+
+State 71
+
+   37 Statement: RET Exp . SEMICOLON
+   48 Exp: Exp . PLUS Exp
+   49    | Exp . MINUS Exp
+   50    | Exp . TIMES Exp
+   51    | Exp . DIV Exp
+   52    | Exp . MOD Exp
+   53    | Exp . EQUAL Exp
+   54    | Exp . NEQ Exp
+   55    | Exp . LESS Exp
+   56    | Exp . GREAT Exp
+   57    | Exp . LEQ Exp
+   58    | Exp . GEQ Exp
+   59    | Exp . LOAND Exp
+   60    | Exp . LOOR Exp
+   63    | Exp . PAS Exp
+   64    | Exp . MAS Exp
+   65    | Exp . TIMESAS Exp
+   66    | Exp . DIVAS Exp
+   67    | Exp . MODAS Exp
+   68    | Exp . ASSIGN Exp
+
+    SEMICOLON  shift, and go to state 102
+    ASSIGN     shift, and go to state 79
+    PAS        shift, and go to state 80
+    MAS        shift, and go to state 81
+    TIMESAS    shift, and go to state 82
+    DIVAS      shift, and go to state 83
+    MODAS      shift, and go to state 84
+    PLUS       shift, and go to state 85
+    MINUS      shift, and go to state 86
+    DIV        shift, and go to state 87
+    MOD        shift, and go to state 88
+    TIMES      shift, and go to state 89
+    EQUAL      shift, and go to state 90
+    NEQ        shift, and go to state 91
+    LEQ        shift, and go to state 92
+    GEQ        shift, and go to state 93
+    LESS       shift, and go to state 94
+    GREAT      shift, and go to state 95
+    LOAND      shift, and go to state 96
+    LOOR       shift, and go to state 97
+
+
+State 72
+
+   34 Statement: WHILE LPAR . Exp RPAR LBR StatementList RBR
+
+    INTEGER  shift, and go to state 43
+    STRING   shift, and go to state 44
+    ID       shift, and go to state 67
+    MINUS    shift, and go to state 49
+    LONOT    shift, and go to state 50
+    FALSE    shift, and go to state 51
+    TRUE     shift, and go to state 54
+    LPAR     shift, and go to state 56
+
+    BOOLEAN  go to state 62
+    Exp      go to state 103
+
+
+State 73
+
+   43 Exp: LPAR Exp . RPAR
+   48    | Exp . PLUS Exp
+   49    | Exp . MINUS Exp
+   50    | Exp . TIMES Exp
+   51    | Exp . DIV Exp
+   52    | Exp . MOD Exp
+   53    | Exp . EQUAL Exp
+   54    | Exp . NEQ Exp
+   55    | Exp . LESS Exp
+   56    | Exp . GREAT Exp
+   57    | Exp . LEQ Exp
+   58    | Exp . GEQ Exp
+   59    | Exp . LOAND Exp
+   60    | Exp . LOOR Exp
+   63    | Exp . PAS Exp
+   64    | Exp . MAS Exp
+   65    | Exp . TIMESAS Exp
+   66    | Exp . DIVAS Exp
+   67    | Exp . MODAS Exp
+   68    | Exp . ASSIGN Exp
+
+    ASSIGN   shift, and go to state 79
+    PAS      shift, and go to state 80
+    MAS      shift, and go to state 81
+    TIMESAS  shift, and go to state 82
+    DIVAS    shift, and go to state 83
+    MODAS    shift, and go to state 84
+    PLUS     shift, and go to state 85
+    MINUS    shift, and go to state 86
+    DIV      shift, and go to state 87
+    MOD      shift, and go to state 88
+    TIMES    shift, and go to state 89
+    EQUAL    shift, and go to state 90
+    NEQ      shift, and go to state 91
+    LEQ      shift, and go to state 92
+    GEQ      shift, and go to state 93
+    LESS     shift, and go to state 94
+    GREAT    shift, and go to state 95
+    LOAND    shift, and go to state 96
+    LOOR     shift, and go to state 97
+    RPAR     shift, and go to state 104
+
+
+State 74
+
+    6 Decl: Type ID .
+
+    $default  reduce using rule 6 (Decl)
+
+
+State 75
+
+   38 Statement: ClassName DOT . ID LPAR Exp RPAR SEMICOLON
+
+    ID  shift, and go to state 105
+
+
+State 76
+
+    8 Function: Type ID LPAR FormalList RPAR LBR StatementList RBR .
+
+    $default  reduce using rule 8 (Function)
+
+
+State 77
+
+   28 StatementList: Statement StatementList .
+
+    $default  reduce using rule 28 (StatementList)
+
+
+State 78
+
+   31 Statement: Exp SEMICOLON .
+
+    $default  reduce using rule 31 (Statement)
+
+
+State 79
+
+   68 Exp: Exp ASSIGN . Exp
+
+    INTEGER  shift, and go to state 43
+    STRING   shift, and go to state 44
+    ID       shift, and go to state 67
+    MINUS    shift, and go to state 49
+    LONOT    shift, and go to state 50
+    FALSE    shift, and go to state 51
+    TRUE     shift, and go to state 54
+    LPAR     shift, and go to state 56
+
+    BOOLEAN  go to state 62
+    Exp      go to state 106
+
+
+State 80
+
+   63 Exp: Exp PAS . Exp
+
+    INTEGER  shift, and go to state 43
+    STRING   shift, and go to state 44
+    ID       shift, and go to state 67
+    MINUS    shift, and go to state 49
+    LONOT    shift, and go to state 50
+    FALSE    shift, and go to state 51
+    TRUE     shift, and go to state 54
+    LPAR     shift, and go to state 56
+
+    BOOLEAN  go to state 62
+    Exp      go to state 107
+
+
+State 81
+
+   64 Exp: Exp MAS . Exp
+
+    INTEGER  shift, and go to state 43
+    STRING   shift, and go to state 44
+    ID       shift, and go to state 67
+    MINUS    shift, and go to state 49
+    LONOT    shift, and go to state 50
+    FALSE    shift, and go to state 51
+    TRUE     shift, and go to state 54
+    LPAR     shift, and go to state 56
+
+    BOOLEAN  go to state 62
+    Exp      go to state 108
+
+
+State 82
+
+   65 Exp: Exp TIMESAS . Exp
+
+    INTEGER  shift, and go to state 43
+    STRING   shift, and go to state 44
+    ID       shift, and go to state 67
+    MINUS    shift, and go to state 49
+    LONOT    shift, and go to state 50
+    FALSE    shift, and go to state 51
+    TRUE     shift, and go to state 54
+    LPAR     shift, and go to state 56
+
+    BOOLEAN  go to state 62
+    Exp      go to state 109
+
+
+State 83
+
+   66 Exp: Exp DIVAS . Exp
+
+    INTEGER  shift, and go to state 43
+    STRING   shift, and go to state 44
+    ID       shift, and go to state 67
+    MINUS    shift, and go to state 49
+    LONOT    shift, and go to state 50
+    FALSE    shift, and go to state 51
+    TRUE     shift, and go to state 54
+    LPAR     shift, and go to state 56
+
+    BOOLEAN  go to state 62
+    Exp      go to state 110
+
+
+State 84
+
+   67 Exp: Exp MODAS . Exp
+
+    INTEGER  shift, and go to state 43
+    STRING   shift, and go to state 44
+    ID       shift, and go to state 67
+    MINUS    shift, and go to state 49
+    LONOT    shift, and go to state 50
+    FALSE    shift, and go to state 51
+    TRUE     shift, and go to state 54
+    LPAR     shift, and go to state 56
+
+    BOOLEAN  go to state 62
+    Exp      go to state 111
+
+
+State 85
+
+   48 Exp: Exp PLUS . Exp
+
+    INTEGER  shift, and go to state 43
+    STRING   shift, and go to state 44
+    ID       shift, and go to state 67
+    MINUS    shift, and go to state 49
+    LONOT    shift, and go to state 50
+    FALSE    shift, and go to state 51
+    TRUE     shift, and go to state 54
+    LPAR     shift, and go to state 56
+
+    BOOLEAN  go to state 62
+    Exp      go to state 112
+
+
+State 86
+
+   49 Exp: Exp MINUS . Exp
+
+    INTEGER  shift, and go to state 43
+    STRING   shift, and go to state 44
+    ID       shift, and go to state 67
+    MINUS    shift, and go to state 49
+    LONOT    shift, and go to state 50
+    FALSE    shift, and go to state 51
+    TRUE     shift, and go to state 54
+    LPAR     shift, and go to state 56
+
+    BOOLEAN  go to state 62
+    Exp      go to state 113
+
+
+State 87
+
+   51 Exp: Exp DIV . Exp
+
+    INTEGER  shift, and go to state 43
+    STRING   shift, and go to state 44
+    ID       shift, and go to state 67
+    MINUS    shift, and go to state 49
+    LONOT    shift, and go to state 50
+    FALSE    shift, and go to state 51
+    TRUE     shift, and go to state 54
+    LPAR     shift, and go to state 56
+
+    BOOLEAN  go to state 62
+    Exp      go to state 114
+
+
+State 88
+
+   52 Exp: Exp MOD . Exp
+
+    INTEGER  shift, and go to state 43
+    STRING   shift, and go to state 44
+    ID       shift, and go to state 67
+    MINUS    shift, and go to state 49
+    LONOT    shift, and go to state 50
+    FALSE    shift, and go to state 51
+    TRUE     shift, and go to state 54
+    LPAR     shift, and go to state 56
+
+    BOOLEAN  go to state 62
+    Exp      go to state 115
+
+
+State 89
+
+   50 Exp: Exp TIMES . Exp
+
+    INTEGER  shift, and go to state 43
+    STRING   shift, and go to state 44
+    ID       shift, and go to state 67
+    MINUS    shift, and go to state 49
+    LONOT    shift, and go to state 50
+    FALSE    shift, and go to state 51
+    TRUE     shift, and go to state 54
+    LPAR     shift, and go to state 56
+
+    BOOLEAN  go to state 62
+    Exp      go to state 116
+
+
+State 90
+
+   53 Exp: Exp EQUAL . Exp
+
+    INTEGER  shift, and go to state 43
+    STRING   shift, and go to state 44
+    ID       shift, and go to state 67
+    MINUS    shift, and go to state 49
+    LONOT    shift, and go to state 50
+    FALSE    shift, and go to state 51
+    TRUE     shift, and go to state 54
+    LPAR     shift, and go to state 56
+
+    BOOLEAN  go to state 62
+    Exp      go to state 117
+
+
+State 91
+
+   54 Exp: Exp NEQ . Exp
+
+    INTEGER  shift, and go to state 43
+    STRING   shift, and go to state 44
+    ID       shift, and go to state 67
+    MINUS    shift, and go to state 49
+    LONOT    shift, and go to state 50
+    FALSE    shift, and go to state 51
+    TRUE     shift, and go to state 54
+    LPAR     shift, and go to state 56
+
+    BOOLEAN  go to state 62
+    Exp      go to state 118
+
+
+State 92
+
+   57 Exp: Exp LEQ . Exp
+
+    INTEGER  shift, and go to state 43
+    STRING   shift, and go to state 44
+    ID       shift, and go to state 67
+    MINUS    shift, and go to state 49
+    LONOT    shift, and go to state 50
+    FALSE    shift, and go to state 51
+    TRUE     shift, and go to state 54
+    LPAR     shift, and go to state 56
+
+    BOOLEAN  go to state 62
+    Exp      go to state 119
+
+
+State 93
+
+   58 Exp: Exp GEQ . Exp
+
+    INTEGER  shift, and go to state 43
+    STRING   shift, and go to state 44
+    ID       shift, and go to state 67
+    MINUS    shift, and go to state 49
+    LONOT    shift, and go to state 50
+    FALSE    shift, and go to state 51
+    TRUE     shift, and go to state 54
+    LPAR     shift, and go to state 56
+
+    BOOLEAN  go to state 62
+    Exp      go to state 120
+
+
+State 94
+
+   55 Exp: Exp LESS . Exp
+
+    INTEGER  shift, and go to state 43
+    STRING   shift, and go to state 44
+    ID       shift, and go to state 67
+    MINUS    shift, and go to state 49
+    LONOT    shift, and go to state 50
+    FALSE    shift, and go to state 51
+    TRUE     shift, and go to state 54
+    LPAR     shift, and go to state 56
+
+    BOOLEAN  go to state 62
+    Exp      go to state 121
+
+
+State 95
+
+   56 Exp: Exp GREAT . Exp
+
+    INTEGER  shift, and go to state 43
+    STRING   shift, and go to state 44
+    ID       shift, and go to state 67
+    MINUS    shift, and go to state 49
+    LONOT    shift, and go to state 50
+    FALSE    shift, and go to state 51
+    TRUE     shift, and go to state 54
+    LPAR     shift, and go to state 56
+
+    BOOLEAN  go to state 62
+    Exp      go to state 122
+
+
+State 96
+
+   59 Exp: Exp LOAND . Exp
+
+    INTEGER  shift, and go to state 43
+    STRING   shift, and go to state 44
+    ID       shift, and go to state 67
+    MINUS    shift, and go to state 49
+    LONOT    shift, and go to state 50
+    FALSE    shift, and go to state 51
+    TRUE     shift, and go to state 54
+    LPAR     shift, and go to state 56
+
+    BOOLEAN  go to state 62
+    Exp      go to state 123
+
+
+State 97
+
+   60 Exp: Exp LOOR . Exp
+
+    INTEGER  shift, and go to state 43
+    STRING   shift, and go to state 44
+    ID       shift, and go to state 67
+    MINUS    shift, and go to state 49
+    LONOT    shift, and go to state 50
+    FALSE    shift, and go to state 51
+    TRUE     shift, and go to state 54
+    LPAR     shift, and go to state 56
+
+    BOOLEAN  go to state 62
+    Exp      go to state 124
+
+
+State 98
+
+   11 FormalRest: COMMA Type ID . FormalRest
+
+    COMMA  shift, and go to state 41
+
+    $default  reduce using rule 12 (FormalRest)
+
+    FormalRest  go to state 125
+
+
+State 99
+
+   35 Statement: COUT INJECT Exp . INJECT ENDL SEMICOLON
+   48 Exp: Exp . PLUS Exp
+   49    | Exp . MINUS Exp
+   50    | Exp . TIMES Exp
+   51    | Exp . DIV Exp
+   52    | Exp . MOD Exp
+   53    | Exp . EQUAL Exp
+   54    | Exp . NEQ Exp
+   55    | Exp . LESS Exp
+   56    | Exp . GREAT Exp
+   57    | Exp . LEQ Exp
+   58    | Exp . GEQ Exp
+   59    | Exp . LOAND Exp
+   60    | Exp . LOOR Exp
+   63    | Exp . PAS Exp
+   64    | Exp . MAS Exp
+   65    | Exp . TIMESAS Exp
+   66    | Exp . DIVAS Exp
+   67    | Exp . MODAS Exp
+   68    | Exp . ASSIGN Exp
+
+    ASSIGN   shift, and go to state 79
+    PAS      shift, and go to state 80
+    MAS      shift, and go to state 81
+    TIMESAS  shift, and go to state 82
+    DIVAS    shift, and go to state 83
+    MODAS    shift, and go to state 84
+    PLUS     shift, and go to state 85
+    MINUS    shift, and go to state 86
+    DIV      shift, and go to state 87
+    MOD      shift, and go to state 88
+    TIMES    shift, and go to state 89
+    INJECT   shift, and go to state 126
+    EQUAL    shift, and go to state 90
+    NEQ      shift, and go to state 91
+    LEQ      shift, and go to state 92
+    GEQ      shift, and go to state 93
+    LESS     shift, and go to state 94
+    GREAT    shift, and go to state 95
+    LOAND    shift, and go to state 96
+    LOOR     shift, and go to state 97
+
+
+State 100
+
+   36 Statement: CIN EXTRACT Exp . SEMICOLON
+   48 Exp: Exp . PLUS Exp
+   49    | Exp . MINUS Exp
+   50    | Exp . TIMES Exp
+   51    | Exp . DIV Exp
+   52    | Exp . MOD Exp
+   53    | Exp . EQUAL Exp
+   54    | Exp . NEQ Exp
+   55    | Exp . LESS Exp
+   56    | Exp . GREAT Exp
+   57    | Exp . LEQ Exp
+   58    | Exp . GEQ Exp
+   59    | Exp . LOAND Exp
+   60    | Exp . LOOR Exp
+   63    | Exp . PAS Exp
+   64    | Exp . MAS Exp
+   65    | Exp . TIMESAS Exp
+   66    | Exp . DIVAS Exp
+   67    | Exp . MODAS Exp
+   68    | Exp . ASSIGN Exp
+
+    SEMICOLON  shift, and go to state 127
+    ASSIGN     shift, and go to state 79
+    PAS        shift, and go to state 80
+    MAS        shift, and go to state 81
+    TIMESAS    shift, and go to state 82
+    DIVAS      shift, and go to state 83
+    MODAS      shift, and go to state 84
+    PLUS       shift, and go to state 85
+    MINUS      shift, and go to state 86
+    DIV        shift, and go to state 87
+    MOD        shift, and go to state 88
+    TIMES      shift, and go to state 89
+    EQUAL      shift, and go to state 90
+    NEQ        shift, and go to state 91
+    LEQ        shift, and go to state 92
+    GEQ        shift, and go to state 93
+    LESS       shift, and go to state 94
+    GREAT      shift, and go to state 95
+    LOAND      shift, and go to state 96
+    LOOR       shift, and go to state 97
+
+
+State 101
+
+   32 Statement: IF LPAR Exp . RPAR LBR StatementList RBR
+   33          | IF LPAR Exp . RPAR LBR StatementList RBR ELSE LBR StatementList RBR
+   48 Exp: Exp . PLUS Exp
+   49    | Exp . MINUS Exp
+   50    | Exp . TIMES Exp
+   51    | Exp . DIV Exp
+   52    | Exp . MOD Exp
+   53    | Exp . EQUAL Exp
+   54    | Exp . NEQ Exp
+   55    | Exp . LESS Exp
+   56    | Exp . GREAT Exp
+   57    | Exp . LEQ Exp
+   58    | Exp . GEQ Exp
+   59    | Exp . LOAND Exp
+   60    | Exp . LOOR Exp
+   63    | Exp . PAS Exp
+   64    | Exp . MAS Exp
+   65    | Exp . TIMESAS Exp
+   66    | Exp . DIVAS Exp
+   67    | Exp . MODAS Exp
+   68    | Exp . ASSIGN Exp
+
+    ASSIGN   shift, and go to state 79
+    PAS      shift, and go to state 80
+    MAS      shift, and go to state 81
+    TIMESAS  shift, and go to state 82
+    DIVAS    shift, and go to state 83
+    MODAS    shift, and go to state 84
+    PLUS     shift, and go to state 85
+    MINUS    shift, and go to state 86
+    DIV      shift, and go to state 87
+    MOD      shift, and go to state 88
+    TIMES    shift, and go to state 89
+    EQUAL    shift, and go to state 90
+    NEQ      shift, and go to state 91
+    LEQ      shift, and go to state 92
+    GEQ      shift, and go to state 93
+    LESS     shift, and go to state 94
+    GREAT    shift, and go to state 95
+    LOAND    shift, and go to state 96
+    LOOR     shift, and go to state 97
+    RPAR     shift, and go to state 128
+
+
+State 102
+
+   37 Statement: RET Exp SEMICOLON .
+
+    $default  reduce using rule 37 (Statement)
+
+
+State 103
+
+   34 Statement: WHILE LPAR Exp . RPAR LBR StatementList RBR
+   48 Exp: Exp . PLUS Exp
+   49    | Exp . MINUS Exp
+   50    | Exp . TIMES Exp
+   51    | Exp . DIV Exp
+   52    | Exp . MOD Exp
+   53    | Exp . EQUAL Exp
+   54    | Exp . NEQ Exp
+   55    | Exp . LESS Exp
+   56    | Exp . GREAT Exp
+   57    | Exp . LEQ Exp
+   58    | Exp . GEQ Exp
+   59    | Exp . LOAND Exp
+   60    | Exp . LOOR Exp
+   63    | Exp . PAS Exp
+   64    | Exp . MAS Exp
+   65    | Exp . TIMESAS Exp
+   66    | Exp . DIVAS Exp
+   67    | Exp . MODAS Exp
+   68    | Exp . ASSIGN Exp
+
+    ASSIGN   shift, and go to state 79
+    PAS      shift, and go to state 80
+    MAS      shift, and go to state 81
+    TIMESAS  shift, and go to state 82
+    DIVAS    shift, and go to state 83
+    MODAS    shift, and go to state 84
+    PLUS     shift, and go to state 85
+    MINUS    shift, and go to state 86
+    DIV      shift, and go to state 87
+    MOD      shift, and go to state 88
+    TIMES    shift, and go to state 89
+    EQUAL    shift, and go to state 90
+    NEQ      shift, and go to state 91
+    LEQ      shift, and go to state 92
+    GEQ      shift, and go to state 93
+    LESS     shift, and go to state 94
+    GREAT    shift, and go to state 95
+    LOAND    shift, and go to state 96
+    LOOR     shift, and go to state 97
+    RPAR     shift, and go to state 129
+
+
+State 104
+
+   43 Exp: LPAR Exp RPAR .
+
+    $default  reduce using rule 43 (Exp)
+
+
+State 105
+
+   38 Statement: ClassName DOT ID . LPAR Exp RPAR SEMICOLON
+
+    LPAR  shift, and go to state 130
+
+
+State 106
+
+   48 Exp: Exp . PLUS Exp
+   49    | Exp . MINUS Exp
+   50    | Exp . TIMES Exp
+   51    | Exp . DIV Exp
+   52    | Exp . MOD Exp
+   53    | Exp . EQUAL Exp
+   54    | Exp . NEQ Exp
+   55    | Exp . LESS Exp
+   56    | Exp . GREAT Exp
+   57    | Exp . LEQ Exp
+   58    | Exp . GEQ Exp
+   59    | Exp . LOAND Exp
+   60    | Exp . LOOR Exp
+   63    | Exp . PAS Exp
+   64    | Exp . MAS Exp
+   65    | Exp . TIMESAS Exp
+   66    | Exp . DIVAS Exp
+   67    | Exp . MODAS Exp
+   68    | Exp . ASSIGN Exp
+   68    | Exp ASSIGN Exp .
+
+    ASSIGN   shift, and go to state 79
+    PAS      shift, and go to state 80
+    MAS      shift, and go to state 81
+    TIMESAS  shift, and go to state 82
+    DIVAS    shift, and go to state 83
+    MODAS    shift, and go to state 84
+    PLUS     shift, and go to state 85
+    MINUS    shift, and go to state 86
+    DIV      shift, and go to state 87
+    MOD      shift, and go to state 88
+    TIMES    shift, and go to state 89
+    EQUAL    shift, and go to state 90
+    NEQ      shift, and go to state 91
+    LEQ      shift, and go to state 92
+    GEQ      shift, and go to state 93
+    LESS     shift, and go to state 94
+    GREAT    shift, and go to state 95
+    LOAND    shift, and go to state 96
+    LOOR     shift, and go to state 97
+
+    $default  reduce using rule 68 (Exp)
+
+
+State 107
+
+   48 Exp: Exp . PLUS Exp
+   49    | Exp . MINUS Exp
+   50    | Exp . TIMES Exp
+   51    | Exp . DIV Exp
+   52    | Exp . MOD Exp
+   53    | Exp . EQUAL Exp
+   54    | Exp . NEQ Exp
+   55    | Exp . LESS Exp
+   56    | Exp . GREAT Exp
+   57    | Exp . LEQ Exp
+   58    | Exp . GEQ Exp
+   59    | Exp . LOAND Exp
+   60    | Exp . LOOR Exp
+   63    | Exp . PAS Exp
+   63    | Exp PAS Exp .
+   64    | Exp . MAS Exp
+   65    | Exp . TIMESAS Exp
+   66    | Exp . DIVAS Exp
+   67    | Exp . MODAS Exp
+   68    | Exp . ASSIGN Exp
+
+    ASSIGN   shift, and go to state 79
+    PAS      shift, and go to state 80
+    MAS      shift, and go to state 81
+    TIMESAS  shift, and go to state 82
+    DIVAS    shift, and go to state 83
+    MODAS    shift, and go to state 84
+    PLUS     shift, and go to state 85
+    MINUS    shift, and go to state 86
+    DIV      shift, and go to state 87
+    MOD      shift, and go to state 88
+    TIMES    shift, and go to state 89
+    EQUAL    shift, and go to state 90
+    NEQ      shift, and go to state 91
+    LEQ      shift, and go to state 92
+    GEQ      shift, and go to state 93
+    LESS     shift, and go to state 94
+    GREAT    shift, and go to state 95
+    LOAND    shift, and go to state 96
+    LOOR     shift, and go to state 97
+
+    $default  reduce using rule 63 (Exp)
+
+
+State 108
+
+   48 Exp: Exp . PLUS Exp
+   49    | Exp . MINUS Exp
+   50    | Exp . TIMES Exp
+   51    | Exp . DIV Exp
+   52    | Exp . MOD Exp
+   53    | Exp . EQUAL Exp
+   54    | Exp . NEQ Exp
+   55    | Exp . LESS Exp
+   56    | Exp . GREAT Exp
+   57    | Exp . LEQ Exp
+   58    | Exp . GEQ Exp
+   59    | Exp . LOAND Exp
+   60    | Exp . LOOR Exp
+   63    | Exp . PAS Exp
+   64    | Exp . MAS Exp
+   64    | Exp MAS Exp .
+   65    | Exp . TIMESAS Exp
+   66    | Exp . DIVAS Exp
+   67    | Exp . MODAS Exp
+   68    | Exp . ASSIGN Exp
+
+    ASSIGN   shift, and go to state 79
+    PAS      shift, and go to state 80
+    MAS      shift, and go to state 81
+    TIMESAS  shift, and go to state 82
+    DIVAS    shift, and go to state 83
+    MODAS    shift, and go to state 84
+    PLUS     shift, and go to state 85
+    MINUS    shift, and go to state 86
+    DIV      shift, and go to state 87
+    MOD      shift, and go to state 88
+    TIMES    shift, and go to state 89
+    EQUAL    shift, and go to state 90
+    NEQ      shift, and go to state 91
+    LEQ      shift, and go to state 92
+    GEQ      shift, and go to state 93
+    LESS     shift, and go to state 94
+    GREAT    shift, and go to state 95
+    LOAND    shift, and go to state 96
+    LOOR     shift, and go to state 97
+
+    $default  reduce using rule 64 (Exp)
+
+
+State 109
+
+   48 Exp: Exp . PLUS Exp
+   49    | Exp . MINUS Exp
+   50    | Exp . TIMES Exp
+   51    | Exp . DIV Exp
+   52    | Exp . MOD Exp
+   53    | Exp . EQUAL Exp
+   54    | Exp . NEQ Exp
+   55    | Exp . LESS Exp
+   56    | Exp . GREAT Exp
+   57    | Exp . LEQ Exp
+   58    | Exp . GEQ Exp
+   59    | Exp . LOAND Exp
+   60    | Exp . LOOR Exp
+   63    | Exp . PAS Exp
+   64    | Exp . MAS Exp
+   65    | Exp . TIMESAS Exp
+   65    | Exp TIMESAS Exp .
+   66    | Exp . DIVAS Exp
+   67    | Exp . MODAS Exp
+   68    | Exp . ASSIGN Exp
+
+    ASSIGN   shift, and go to state 79
+    PAS      shift, and go to state 80
+    MAS      shift, and go to state 81
+    TIMESAS  shift, and go to state 82
+    DIVAS    shift, and go to state 83
+    MODAS    shift, and go to state 84
+    PLUS     shift, and go to state 85
+    MINUS    shift, and go to state 86
+    DIV      shift, and go to state 87
+    MOD      shift, and go to state 88
+    TIMES    shift, and go to state 89
+    EQUAL    shift, and go to state 90
+    NEQ      shift, and go to state 91
+    LEQ      shift, and go to state 92
+    GEQ      shift, and go to state 93
+    LESS     shift, and go to state 94
+    GREAT    shift, and go to state 95
+    LOAND    shift, and go to state 96
+    LOOR     shift, and go to state 97
+
+    $default  reduce using rule 65 (Exp)
+
+
+State 110
+
+   48 Exp: Exp . PLUS Exp
+   49    | Exp . MINUS Exp
+   50    | Exp . TIMES Exp
+   51    | Exp . DIV Exp
+   52    | Exp . MOD Exp
+   53    | Exp . EQUAL Exp
+   54    | Exp . NEQ Exp
+   55    | Exp . LESS Exp
+   56    | Exp . GREAT Exp
+   57    | Exp . LEQ Exp
+   58    | Exp . GEQ Exp
+   59    | Exp . LOAND Exp
+   60    | Exp . LOOR Exp
+   63    | Exp . PAS Exp
+   64    | Exp . MAS Exp
+   65    | Exp . TIMESAS Exp
+   66    | Exp . DIVAS Exp
+   66    | Exp DIVAS Exp .
+   67    | Exp . MODAS Exp
+   68    | Exp . ASSIGN Exp
+
+    ASSIGN   shift, and go to state 79
+    PAS      shift, and go to state 80
+    MAS      shift, and go to state 81
+    TIMESAS  shift, and go to state 82
+    DIVAS    shift, and go to state 83
+    MODAS    shift, and go to state 84
+    PLUS     shift, and go to state 85
+    MINUS    shift, and go to state 86
+    DIV      shift, and go to state 87
+    MOD      shift, and go to state 88
+    TIMES    shift, and go to state 89
+    EQUAL    shift, and go to state 90
+    NEQ      shift, and go to state 91
+    LEQ      shift, and go to state 92
+    GEQ      shift, and go to state 93
+    LESS     shift, and go to state 94
+    GREAT    shift, and go to state 95
+    LOAND    shift, and go to state 96
+    LOOR     shift, and go to state 97
+
+    $default  reduce using rule 66 (Exp)
+
+
+State 111
+
+   48 Exp: Exp . PLUS Exp
+   49    | Exp . MINUS Exp
+   50    | Exp . TIMES Exp
+   51    | Exp . DIV Exp
+   52    | Exp . MOD Exp
+   53    | Exp . EQUAL Exp
+   54    | Exp . NEQ Exp
+   55    | Exp . LESS Exp
+   56    | Exp . GREAT Exp
+   57    | Exp . LEQ Exp
+   58    | Exp . GEQ Exp
+   59    | Exp . LOAND Exp
+   60    | Exp . LOOR Exp
+   63    | Exp . PAS Exp
+   64    | Exp . MAS Exp
+   65    | Exp . TIMESAS Exp
+   66    | Exp . DIVAS Exp
+   67    | Exp . MODAS Exp
+   67    | Exp MODAS Exp .
+   68    | Exp . ASSIGN Exp
+
+    ASSIGN   shift, and go to state 79
+    PAS      shift, and go to state 80
+    MAS      shift, and go to state 81
+    TIMESAS  shift, and go to state 82
+    DIVAS    shift, and go to state 83
+    MODAS    shift, and go to state 84
+    PLUS     shift, and go to state 85
+    MINUS    shift, and go to state 86
+    DIV      shift, and go to state 87
+    MOD      shift, and go to state 88
+    TIMES    shift, and go to state 89
+    EQUAL    shift, and go to state 90
+    NEQ      shift, and go to state 91
+    LEQ      shift, and go to state 92
+    GEQ      shift, and go to state 93
+    LESS     shift, and go to state 94
+    GREAT    shift, and go to state 95
+    LOAND    shift, and go to state 96
+    LOOR     shift, and go to state 97
+
+    $default  reduce using rule 67 (Exp)
+
+
+State 112
+
+   48 Exp: Exp . PLUS Exp
+   48    | Exp PLUS Exp .
+   49    | Exp . MINUS Exp
+   50    | Exp . TIMES Exp
+   51    | Exp . DIV Exp
+   52    | Exp . MOD Exp
+   53    | Exp . EQUAL Exp
+   54    | Exp . NEQ Exp
+   55    | Exp . LESS Exp
+   56    | Exp . GREAT Exp
+   57    | Exp . LEQ Exp
+   58    | Exp . GEQ Exp
+   59    | Exp . LOAND Exp
+   60    | Exp . LOOR Exp
+   63    | Exp . PAS Exp
+   64    | Exp . MAS Exp
+   65    | Exp . TIMESAS Exp
+   66    | Exp . DIVAS Exp
+   67    | Exp . MODAS Exp
+   68    | Exp . ASSIGN Exp
+
+    DIV    shift, and go to state 87
+    MOD    shift, and go to state 88
+    TIMES  shift, and go to state 89
+
+    $default  reduce using rule 48 (Exp)
+
+
+State 113
+
+   48 Exp: Exp . PLUS Exp
+   49    | Exp . MINUS Exp
+   49    | Exp MINUS Exp .
+   50    | Exp . TIMES Exp
+   51    | Exp . DIV Exp
+   52    | Exp . MOD Exp
+   53    | Exp . EQUAL Exp
+   54    | Exp . NEQ Exp
+   55    | Exp . LESS Exp
+   56    | Exp . GREAT Exp
+   57    | Exp . LEQ Exp
+   58    | Exp . GEQ Exp
+   59    | Exp . LOAND Exp
+   60    | Exp . LOOR Exp
+   63    | Exp . PAS Exp
+   64    | Exp . MAS Exp
+   65    | Exp . TIMESAS Exp
+   66    | Exp . DIVAS Exp
+   67    | Exp . MODAS Exp
+   68    | Exp . ASSIGN Exp
+
+    DIV    shift, and go to state 87
+    MOD    shift, and go to state 88
+    TIMES  shift, and go to state 89
+
+    $default  reduce using rule 49 (Exp)
+
+
+State 114
+
+   48 Exp: Exp . PLUS Exp
+   49    | Exp . MINUS Exp
+   50    | Exp . TIMES Exp
+   51    | Exp . DIV Exp
+   51    | Exp DIV Exp .
+   52    | Exp . MOD Exp
+   53    | Exp . EQUAL Exp
+   54    | Exp . NEQ Exp
+   55    | Exp . LESS Exp
+   56    | Exp . GREAT Exp
+   57    | Exp . LEQ Exp
+   58    | Exp . GEQ Exp
+   59    | Exp . LOAND Exp
+   60    | Exp . LOOR Exp
+   63    | Exp . PAS Exp
+   64    | Exp . MAS Exp
+   65    | Exp . TIMESAS Exp
+   66    | Exp . DIVAS Exp
+   67    | Exp . MODAS Exp
+   68    | Exp . ASSIGN Exp
+
+    $default  reduce using rule 51 (Exp)
+
+
+State 115
+
+   48 Exp: Exp . PLUS Exp
+   49    | Exp . MINUS Exp
+   50    | Exp . TIMES Exp
+   51    | Exp . DIV Exp
+   52    | Exp . MOD Exp
+   52    | Exp MOD Exp .
+   53    | Exp . EQUAL Exp
+   54    | Exp . NEQ Exp
+   55    | Exp . LESS Exp
+   56    | Exp . GREAT Exp
+   57    | Exp . LEQ Exp
+   58    | Exp . GEQ Exp
+   59    | Exp . LOAND Exp
+   60    | Exp . LOOR Exp
+   63    | Exp . PAS Exp
+   64    | Exp . MAS Exp
+   65    | Exp . TIMESAS Exp
+   66    | Exp . DIVAS Exp
+   67    | Exp . MODAS Exp
+   68    | Exp . ASSIGN Exp
+
+    $default  reduce using rule 52 (Exp)
+
+
+State 116
+
+   48 Exp: Exp . PLUS Exp
+   49    | Exp . MINUS Exp
+   50    | Exp . TIMES Exp
+   50    | Exp TIMES Exp .
+   51    | Exp . DIV Exp
+   52    | Exp . MOD Exp
+   53    | Exp . EQUAL Exp
+   54    | Exp . NEQ Exp
+   55    | Exp . LESS Exp
+   56    | Exp . GREAT Exp
+   57    | Exp . LEQ Exp
+   58    | Exp . GEQ Exp
+   59    | Exp . LOAND Exp
+   60    | Exp . LOOR Exp
+   63    | Exp . PAS Exp
+   64    | Exp . MAS Exp
+   65    | Exp . TIMESAS Exp
+   66    | Exp . DIVAS Exp
+   67    | Exp . MODAS Exp
+   68    | Exp . ASSIGN Exp
+
+    $default  reduce using rule 50 (Exp)
+
+
+State 117
+
+   48 Exp: Exp . PLUS Exp
+   49    | Exp . MINUS Exp
+   50    | Exp . TIMES Exp
+   51    | Exp . DIV Exp
+   52    | Exp . MOD Exp
+   53    | Exp . EQUAL Exp
+   53    | Exp EQUAL Exp .
+   54    | Exp . NEQ Exp
+   55    | Exp . LESS Exp
+   56    | Exp . GREAT Exp
+   57    | Exp . LEQ Exp
+   58    | Exp . GEQ Exp
+   59    | Exp . LOAND Exp
+   60    | Exp . LOOR Exp
+   63    | Exp . PAS Exp
+   64    | Exp . MAS Exp
+   65    | Exp . TIMESAS Exp
+   66    | Exp . DIVAS Exp
+   67    | Exp . MODAS Exp
+   68    | Exp . ASSIGN Exp
+
+    PLUS   shift, and go to state 85
+    MINUS  shift, and go to state 86
+    DIV    shift, and go to state 87
+    MOD    shift, and go to state 88
+    TIMES  shift, and go to state 89
+    LEQ    shift, and go to state 92
+    GEQ    shift, and go to state 93
+    LESS   shift, and go to state 94
+    GREAT  shift, and go to state 95
+
+    $default  reduce using rule 53 (Exp)
+
+
+State 118
+
+   48 Exp: Exp . PLUS Exp
+   49    | Exp . MINUS Exp
+   50    | Exp . TIMES Exp
+   51    | Exp . DIV Exp
+   52    | Exp . MOD Exp
+   53    | Exp . EQUAL Exp
+   54    | Exp . NEQ Exp
+   54    | Exp NEQ Exp .
+   55    | Exp . LESS Exp
+   56    | Exp . GREAT Exp
+   57    | Exp . LEQ Exp
+   58    | Exp . GEQ Exp
+   59    | Exp . LOAND Exp
+   60    | Exp . LOOR Exp
+   63    | Exp . PAS Exp
+   64    | Exp . MAS Exp
+   65    | Exp . TIMESAS Exp
+   66    | Exp . DIVAS Exp
+   67    | Exp . MODAS Exp
+   68    | Exp . ASSIGN Exp
+
+    PLUS   shift, and go to state 85
+    MINUS  shift, and go to state 86
+    DIV    shift, and go to state 87
+    MOD    shift, and go to state 88
+    TIMES  shift, and go to state 89
+    LEQ    shift, and go to state 92
+    GEQ    shift, and go to state 93
+    LESS   shift, and go to state 94
+    GREAT  shift, and go to state 95
+
+    $default  reduce using rule 54 (Exp)
+
+
+State 119
+
+   48 Exp: Exp . PLUS Exp
+   49    | Exp . MINUS Exp
+   50    | Exp . TIMES Exp
+   51    | Exp . DIV Exp
+   52    | Exp . MOD Exp
+   53    | Exp . EQUAL Exp
+   54    | Exp . NEQ Exp
+   55    | Exp . LESS Exp
+   56    | Exp . GREAT Exp
+   57    | Exp . LEQ Exp
+   57    | Exp LEQ Exp .
+   58    | Exp . GEQ Exp
+   59    | Exp . LOAND Exp
+   60    | Exp . LOOR Exp
+   63    | Exp . PAS Exp
+   64    | Exp . MAS Exp
+   65    | Exp . TIMESAS Exp
+   66    | Exp . DIVAS Exp
+   67    | Exp . MODAS Exp
+   68    | Exp . ASSIGN Exp
+
+    PLUS   shift, and go to state 85
+    MINUS  shift, and go to state 86
+    DIV    shift, and go to state 87
+    MOD    shift, and go to state 88
+    TIMES  shift, and go to state 89
+
+    $default  reduce using rule 57 (Exp)
+
+
+State 120
+
+   48 Exp: Exp . PLUS Exp
+   49    | Exp . MINUS Exp
+   50    | Exp . TIMES Exp
+   51    | Exp . DIV Exp
+   52    | Exp . MOD Exp
+   53    | Exp . EQUAL Exp
+   54    | Exp . NEQ Exp
+   55    | Exp . LESS Exp
+   56    | Exp . GREAT Exp
+   57    | Exp . LEQ Exp
+   58    | Exp . GEQ Exp
+   58    | Exp GEQ Exp .
+   59    | Exp . LOAND Exp
+   60    | Exp . LOOR Exp
+   63    | Exp . PAS Exp
+   64    | Exp . MAS Exp
+   65    | Exp . TIMESAS Exp
+   66    | Exp . DIVAS Exp
+   67    | Exp . MODAS Exp
+   68    | Exp . ASSIGN Exp
+
+    PLUS   shift, and go to state 85
+    MINUS  shift, and go to state 86
+    DIV    shift, and go to state 87
+    MOD    shift, and go to state 88
+    TIMES  shift, and go to state 89
+
+    $default  reduce using rule 58 (Exp)
+
+
+State 121
+
+   48 Exp: Exp . PLUS Exp
+   49    | Exp . MINUS Exp
+   50    | Exp . TIMES Exp
+   51    | Exp . DIV Exp
+   52    | Exp . MOD Exp
+   53    | Exp . EQUAL Exp
+   54    | Exp . NEQ Exp
+   55    | Exp . LESS Exp
+   55    | Exp LESS Exp .
+   56    | Exp . GREAT Exp
+   57    | Exp . LEQ Exp
+   58    | Exp . GEQ Exp
+   59    | Exp . LOAND Exp
+   60    | Exp . LOOR Exp
+   63    | Exp . PAS Exp
+   64    | Exp . MAS Exp
+   65    | Exp . TIMESAS Exp
+   66    | Exp . DIVAS Exp
+   67    | Exp . MODAS Exp
+   68    | Exp . ASSIGN Exp
+
+    PLUS   shift, and go to state 85
+    MINUS  shift, and go to state 86
+    DIV    shift, and go to state 87
+    MOD    shift, and go to state 88
+    TIMES  shift, and go to state 89
+
+    $default  reduce using rule 55 (Exp)
+
+
+State 122
+
+   48 Exp: Exp . PLUS Exp
+   49    | Exp . MINUS Exp
+   50    | Exp . TIMES Exp
+   51    | Exp . DIV Exp
+   52    | Exp . MOD Exp
+   53    | Exp . EQUAL Exp
+   54    | Exp . NEQ Exp
+   55    | Exp . LESS Exp
+   56    | Exp . GREAT Exp
+   56    | Exp GREAT Exp .
+   57    | Exp . LEQ Exp
+   58    | Exp . GEQ Exp
+   59    | Exp . LOAND Exp
+   60    | Exp . LOOR Exp
+   63    | Exp . PAS Exp
+   64    | Exp . MAS Exp
+   65    | Exp . TIMESAS Exp
+   66    | Exp . DIVAS Exp
+   67    | Exp . MODAS Exp
+   68    | Exp . ASSIGN Exp
+
+    PLUS   shift, and go to state 85
+    MINUS  shift, and go to state 86
+    DIV    shift, and go to state 87
+    MOD    shift, and go to state 88
+    TIMES  shift, and go to state 89
+
+    $default  reduce using rule 56 (Exp)
+
+
+State 123
+
+   48 Exp: Exp . PLUS Exp
+   49    | Exp . MINUS Exp
+   50    | Exp . TIMES Exp
+   51    | Exp . DIV Exp
+   52    | Exp . MOD Exp
+   53    | Exp . EQUAL Exp
+   54    | Exp . NEQ Exp
+   55    | Exp . LESS Exp
+   56    | Exp . GREAT Exp
+   57    | Exp . LEQ Exp
+   58    | Exp . GEQ Exp
+   59    | Exp . LOAND Exp
+   59    | Exp LOAND Exp .
+   60    | Exp . LOOR Exp
+   63    | Exp . PAS Exp
+   64    | Exp . MAS Exp
+   65    | Exp . TIMESAS Exp
+   66    | Exp . DIVAS Exp
+   67    | Exp . MODAS Exp
+   68    | Exp . ASSIGN Exp
+
+    PLUS   shift, and go to state 85
+    MINUS  shift, and go to state 86
+    DIV    shift, and go to state 87
+    MOD    shift, and go to state 88
+    TIMES  shift, and go to state 89
+    EQUAL  shift, and go to state 90
+    NEQ    shift, and go to state 91
+    LEQ    shift, and go to state 92
+    GEQ    shift, and go to state 93
+    LESS   shift, and go to state 94
+    GREAT  shift, and go to state 95
+
+    $default  reduce using rule 59 (Exp)
+
+
+State 124
+
+   48 Exp: Exp . PLUS Exp
+   49    | Exp . MINUS Exp
+   50    | Exp . TIMES Exp
+   51    | Exp . DIV Exp
+   52    | Exp . MOD Exp
+   53    | Exp . EQUAL Exp
+   54    | Exp . NEQ Exp
+   55    | Exp . LESS Exp
+   56    | Exp . GREAT Exp
+   57    | Exp . LEQ Exp
+   58    | Exp . GEQ Exp
+   59    | Exp . LOAND Exp
+   60    | Exp . LOOR Exp
+   60    | Exp LOOR Exp .
+   63    | Exp . PAS Exp
+   64    | Exp . MAS Exp
+   65    | Exp . TIMESAS Exp
+   66    | Exp . DIVAS Exp
+   67    | Exp . MODAS Exp
+   68    | Exp . ASSIGN Exp
+
+    PLUS   shift, and go to state 85
+    MINUS  shift, and go to state 86
+    DIV    shift, and go to state 87
+    MOD    shift, and go to state 88
+    TIMES  shift, and go to state 89
+    EQUAL  shift, and go to state 90
+    NEQ    shift, and go to state 91
+    LEQ    shift, and go to state 92
+    GEQ    shift, and go to state 93
+    LESS   shift, and go to state 94
+    GREAT  shift, and go to state 95
+    LOAND  shift, and go to state 96
+
+    $default  reduce using rule 60 (Exp)
+
+
+State 125
+
+   11 FormalRest: COMMA Type ID FormalRest .
+
+    $default  reduce using rule 11 (FormalRest)
+
+
+State 126
+
+   35 Statement: COUT INJECT Exp INJECT . ENDL SEMICOLON
+
+    ENDL  shift, and go to state 131
+
+
+State 127
+
+   36 Statement: CIN EXTRACT Exp SEMICOLON .
+
+    $default  reduce using rule 36 (Statement)
+
+
+State 128
+
+   32 Statement: IF LPAR Exp RPAR . LBR StatementList RBR
+   33          | IF LPAR Exp RPAR . LBR StatementList RBR ELSE LBR StatementList RBR
+
+    LBR  shift, and go to state 132
+
+
+State 129
+
+   34 Statement: WHILE LPAR Exp RPAR . LBR StatementList RBR
+
+    LBR  shift, and go to state 133
+
+
+State 130
+
+   38 Statement: ClassName DOT ID LPAR . Exp RPAR SEMICOLON
+
+    INTEGER  shift, and go to state 43
+    STRING   shift, and go to state 44
+    ID       shift, and go to state 67
+    MINUS    shift, and go to state 49
+    LONOT    shift, and go to state 50
+    FALSE    shift, and go to state 51
+    TRUE     shift, and go to state 54
+    LPAR     shift, and go to state 56
+
+    BOOLEAN  go to state 62
+    Exp      go to state 134
+
+
+State 131
+
+   35 Statement: COUT INJECT Exp INJECT ENDL . SEMICOLON
+
+    SEMICOLON  shift, and go to state 135
+
+
+State 132
+
+   32 Statement: IF LPAR Exp RPAR LBR . StatementList RBR
+   33          | IF LPAR Exp RPAR LBR . StatementList RBR ELSE LBR StatementList RBR
+
+    INTEGER     shift, and go to state 43
+    STRING      shift, and go to state 44
+    ID          shift, and go to state 45
+    COUT        shift, and go to state 46
+    CIN         shift, and go to state 47
+    SEMICOLON   shift, and go to state 48
+    MINUS       shift, and go to state 49
+    LONOT       shift, and go to state 50
+    Q_CLASS     shift, and go to state 2
+    FALSE       shift, and go to state 51
+    Int         shift, and go to state 3
+    String      shift, and go to state 4
+    Intarr      shift, and go to state 5
+    Stringarr   shift, and go to state 6
+    Intlist     shift, and go to state 7
+    Stringlist  shift, and go to state 8
+    IF          shift, and go to state 52
+    RET         shift, and go to state 53
+    TRUE        shift, and go to state 54
+    Void        shift, and go to state 9
+    WHILE       shift, and go to state 55
+    LPAR        shift, and go to state 56
+
+    $default  reduce using rule 29 (StatementList)
+
+    Decl           go to state 13
+    Type           go to state 57
+    Class          go to state 16
+    ClassName      go to state 58
+    StatementList  go to state 136
+    Statement      go to state 60
+    DeclStatement  go to state 61
+    BOOLEAN        go to state 62
+    Exp            go to state 63
+
+
+State 133
+
+   34 Statement: WHILE LPAR Exp RPAR LBR . StatementList RBR
+
+    INTEGER     shift, and go to state 43
+    STRING      shift, and go to state 44
+    ID          shift, and go to state 45
+    COUT        shift, and go to state 46
+    CIN         shift, and go to state 47
+    SEMICOLON   shift, and go to state 48
+    MINUS       shift, and go to state 49
+    LONOT       shift, and go to state 50
+    Q_CLASS     shift, and go to state 2
+    FALSE       shift, and go to state 51
+    Int         shift, and go to state 3
+    String      shift, and go to state 4
+    Intarr      shift, and go to state 5
+    Stringarr   shift, and go to state 6
+    Intlist     shift, and go to state 7
+    Stringlist  shift, and go to state 8
+    IF          shift, and go to state 52
+    RET         shift, and go to state 53
+    TRUE        shift, and go to state 54
+    Void        shift, and go to state 9
+    WHILE       shift, and go to state 55
+    LPAR        shift, and go to state 56
+
+    $default  reduce using rule 29 (StatementList)
+
+    Decl           go to state 13
+    Type           go to state 57
+    Class          go to state 16
+    ClassName      go to state 58
+    StatementList  go to state 137
+    Statement      go to state 60
+    DeclStatement  go to state 61
+    BOOLEAN        go to state 62
+    Exp            go to state 63
+
+
+State 134
+
+   38 Statement: ClassName DOT ID LPAR Exp . RPAR SEMICOLON
+   48 Exp: Exp . PLUS Exp
+   49    | Exp . MINUS Exp
+   50    | Exp . TIMES Exp
+   51    | Exp . DIV Exp
+   52    | Exp . MOD Exp
+   53    | Exp . EQUAL Exp
+   54    | Exp . NEQ Exp
+   55    | Exp . LESS Exp
+   56    | Exp . GREAT Exp
+   57    | Exp . LEQ Exp
+   58    | Exp . GEQ Exp
+   59    | Exp . LOAND Exp
+   60    | Exp . LOOR Exp
+   63    | Exp . PAS Exp
+   64    | Exp . MAS Exp
+   65    | Exp . TIMESAS Exp
+   66    | Exp . DIVAS Exp
+   67    | Exp . MODAS Exp
+   68    | Exp . ASSIGN Exp
+
+    ASSIGN   shift, and go to state 79
+    PAS      shift, and go to state 80
+    MAS      shift, and go to state 81
+    TIMESAS  shift, and go to state 82
+    DIVAS    shift, and go to state 83
+    MODAS    shift, and go to state 84
+    PLUS     shift, and go to state 85
+    MINUS    shift, and go to state 86
+    DIV      shift, and go to state 87
+    MOD      shift, and go to state 88
+    TIMES    shift, and go to state 89
+    EQUAL    shift, and go to state 90
+    NEQ      shift, and go to state 91
+    LEQ      shift, and go to state 92
+    GEQ      shift, and go to state 93
+    LESS     shift, and go to state 94
+    GREAT    shift, and go to state 95
+    LOAND    shift, and go to state 96
+    LOOR     shift, and go to state 97
+    RPAR     shift, and go to state 138
+
+
+State 135
+
+   35 Statement: COUT INJECT Exp INJECT ENDL SEMICOLON .
+
+    $default  reduce using rule 35 (Statement)
+
+
+State 136
+
+   32 Statement: IF LPAR Exp RPAR LBR StatementList . RBR
+   33          | IF LPAR Exp RPAR LBR StatementList . RBR ELSE LBR StatementList RBR
+
+    RBR  shift, and go to state 139
+
+
+State 137
+
+   34 Statement: WHILE LPAR Exp RPAR LBR StatementList . RBR
+
+    RBR  shift, and go to state 140
+
+
+State 138
+
+   38 Statement: ClassName DOT ID LPAR Exp RPAR . SEMICOLON
+
+    SEMICOLON  shift, and go to state 141
+
+
+State 139
+
+   32 Statement: IF LPAR Exp RPAR LBR StatementList RBR .
+   33          | IF LPAR Exp RPAR LBR StatementList RBR . ELSE LBR StatementList RBR
+
+    ELSE  shift, and go to state 142
+
+    $default  reduce using rule 32 (Statement)
+
+
+State 140
+
+   34 Statement: WHILE LPAR Exp RPAR LBR StatementList RBR .
+
+    $default  reduce using rule 34 (Statement)
+
+
+State 141
+
+   38 Statement: ClassName DOT ID LPAR Exp RPAR SEMICOLON .
+
+    $default  reduce using rule 38 (Statement)
+
+
+State 142
+
+   33 Statement: IF LPAR Exp RPAR LBR StatementList RBR ELSE . LBR StatementList RBR
+
+    LBR  shift, and go to state 143
+
+
+State 143
+
+   33 Statement: IF LPAR Exp RPAR LBR StatementList RBR ELSE LBR . StatementList RBR
+
+    INTEGER     shift, and go to state 43
+    STRING      shift, and go to state 44
+    ID          shift, and go to state 45
+    COUT        shift, and go to state 46
+    CIN         shift, and go to state 47
+    SEMICOLON   shift, and go to state 48
+    MINUS       shift, and go to state 49
+    LONOT       shift, and go to state 50
+    Q_CLASS     shift, and go to state 2
+    FALSE       shift, and go to state 51
+    Int         shift, and go to state 3
+    String      shift, and go to state 4
+    Intarr      shift, and go to state 5
+    Stringarr   shift, and go to state 6
+    Intlist     shift, and go to state 7
+    Stringlist  shift, and go to state 8
+    IF          shift, and go to state 52
+    RET         shift, and go to state 53
+    TRUE        shift, and go to state 54
+    Void        shift, and go to state 9
+    WHILE       shift, and go to state 55
+    LPAR        shift, and go to state 56
+
+    $default  reduce using rule 29 (StatementList)
+
+    Decl           go to state 13
+    Type           go to state 57
+    Class          go to state 16
+    ClassName      go to state 58
+    StatementList  go to state 144
+    Statement      go to state 60
+    DeclStatement  go to state 61
+    BOOLEAN        go to state 62
+    Exp            go to state 63
+
+
+State 144
+
+   33 Statement: IF LPAR Exp RPAR LBR StatementList RBR ELSE LBR StatementList . RBR
+
+    RBR  shift, and go to state 145
+
+
+State 145
+
+   33 Statement: IF LPAR Exp RPAR LBR StatementList RBR ELSE LBR StatementList RBR .
+
+    $default  reduce using rule 33 (Statement)

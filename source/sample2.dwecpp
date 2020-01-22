@@ -1,0 +1,24 @@
+class y1 {
+	private:
+		int x;
+		int y;
+		string str;
+	public:
+		void setdata(int xx, int yy, string ss) {
+			x = xx;
+			y = yy;
+			str = ss;
+		}
+		void sringcopy(string t){
+			if( t != "") {
+				s = t;
+			}
+		}
+};
+
+int main() {
+	y1 yy;
+	y.strdata((3),4,"yallacha");
+	y.strcopy("Happy New Year!\n");
+	return 0;
+}

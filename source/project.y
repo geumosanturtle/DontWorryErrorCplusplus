@@ -1,6 +1,6 @@
 %{
 	#include <iostream>
-	#include <ctype>
+	//#include <ctype>
 	#include <cstdio>
 	int yyerror(const char *);
 	int yylex();
@@ -11,26 +11,19 @@
 }
 %token <ival> INTEGER
 %token <sval> STRING
+%token SIZE THIS
 %token ID
 %token BOOL
 %token Q_CLASS
-%token PRIVATE 
-%token PUBLIC
-%token Int
-%token String
-%token Intarr
-%token Stringarr
-%token Intlist
-%token Stringlist
-%token LBR 
-%token RBR
-%left "<<" ">>"
-%left '<'
-%left '+' '-'
-%left '*' '/' '%'
-%left '(' ')'
-%left '{' '}'
-%right UMINUS UPLUSE
+%token PRIVATE PUBLIC
+%token Int String Intarr Stringarr Intlist Stringlist Void RET
+%token LBR RBR COMMA SEMICOLON COLON
+%token LOAND LOOR LONOT
+%token LESS GREAT LEQ GEQ ASSIGN EQUAL
+%token PLUS MINUS TIMES MOD DIV
+%token INJECT EXTRACT
+%token LPAR RPAR
+%right UMINUS UPLUS
 %%
 Program		:	FunctionList
 		;
@@ -43,11 +36,12 @@ Decl	:	Type ID ';'
 	;
 DeclList	:	Decl DeclList
 	|	Class DeclList
-	|	Func DeclList
+	|	Function DeclList
 	|
 	;
 Function	:	Type ID LPAR FormalList RPAR LBR StatementList RBR
 	;
+ClassDecl 	: Class ';'
 MethodDecl	:	Function MethodDecl
 	|
 	;
@@ -61,11 +55,11 @@ FormalRest	:	',' Type ID FormalRest
 StatementList	:	Statement StatementList
 	|
 	;
-Statement	:	Decl '=' LBR ExpList RBR
+Statement	:	Decl ASSIGN LBR ExpList RBR
 	|	"if" LPAR Exp RPAR LBR StatementList RBR
 	|	"while" LPAR Exp RPAR LBR StatementList RBR
-	|	"cout" "<<" ID "<<" "endl" ';'
-	|	"cin" ">>" ID ';'
+	|	"cout" INJECT ID INJECT "endl" ';'
+	|	"cin" EXTRACT ID ';'
 	|	Exp
 	| 	RET Exp
 	;
@@ -77,16 +71,13 @@ ClassName	:	ID
 ClassStatement	:	Access ':' ClassDecl MethodDecl ClassStatement
 	|
 	;
-ClassDecl	:	Decl ClassDeclList
-	|
-	;
 	
 Exp	:	INTEGER Op
 	|	INTEGER Op1
 	|	BOOL Op1
-	|	'!' Exp
+	|	LONOT Exp
 	|	ID Op2
-	|	this IDList
+	|	THIS IDList
 	|	ID IDList
 	|	LPAR Exp RPAR
 	|	Sign
@@ -94,7 +85,7 @@ Exp	:	INTEGER Op
 
 IDList	:	'.' ID IDList
 	|	'.' ID LPAR FormalList RPAR
-	|	'.' size LPAR RPAR
+	|	'.' SIZE LPAR RPAR
 	|	',' ID IDList
 	|
 	;
@@ -120,20 +111,24 @@ ExpRest	:	',' Exp ExpRest
 	|
 	;
 
-Op	:	'+' Exp Op
-	|	'-' Exp Op
-	|	'*' Exp Op
-	|	'/' Exp Op
-	|	'%' Exp Op
+Op	:	PLUS Exp Op
+	|	MINUS Exp Op
+	|	TIMES Exp Op
+	|	DIV Exp Op
+	|	MOD Exp Op
 	|
 	;	
-Op1	: 	"&&" Exp Op1
-	|	"||" Exp Op1	
+Op1	: 	LOAND Exp Op1
+	|	LOOR Exp Op1
+	|	LESS Exp Op1
+	|	GREAT Exp Op1
+	|	GEQ Exp Op1
+	|	LEQ Exp Op1
+	|	EQUAL Exp Op1
 	|
 	;
-Op2	:	'=' Exp
+Op2	:	ASSIGN Exp
 	;
-
 
 %%
 int main() { yyparse(); return 0;}
